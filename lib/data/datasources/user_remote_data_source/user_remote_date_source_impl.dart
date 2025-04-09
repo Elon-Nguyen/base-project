@@ -1,8 +1,7 @@
-
 import 'dart:convert';
+import 'package:base_project/core/errors/server_not_found.dart';
+import 'package:base_project/domain/entities/user.dart';
 import 'package:http/http.dart' as http;
-
-import 'package:base_project/data/models/user_model.dart';
 
 import 'user_remote_data_source.dart';
 
@@ -12,14 +11,18 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
   UserRemoteDataSourceImpl();
 
   @override
-  Future<UserModel> getUserDetails(String userId) async {
-    final response = await client.get(Uri.parse('https://api.example.com/users/$userId'));
+  // Future<UserModel> getUserDetails(String userId) async {
+  Future<User> getUserDetails(String userId) async {
+    final response = await client.get(
+      Uri.parse('https://jsonplaceholder.typicode.com/users/1'),
+    );
 
     if (response.statusCode == 200) {
-      final Map<String, dynamic> data = jsonDecode(response.body);
-      return UserModel(id: data['id'], name: data['name'], email: data['email']);
+      final Map<String, dynamic> json = jsonDecode(response.body);
+      final user = User.fromJson(json);
+      return user;
     } else {
-      throw Exception('Failed to load user');
+      throw ServerNotFound();
     }
   }
 }

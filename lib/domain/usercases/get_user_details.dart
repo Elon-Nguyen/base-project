@@ -9,7 +9,6 @@ class GetUserDetails {
   GetUserDetails(this.repository);
 
   Future<Either<Failure, User>> execute(String userId) async {
-    print("GetUserDetails execute");
     return await repository.getUserDetails(userId);
   }
 }

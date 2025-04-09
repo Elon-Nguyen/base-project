@@ -12,7 +12,7 @@ class UserDetailsScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(title: Text("User Details")),
       body: FutureBuilder(
-        future: userVM.fetchUserDetails("user-id"),
+        future: userVM.fetchUserDetails("1"),
         builder: (context, snapshot) {
           if (userVM.isLoading) {
             return Center(child: CircularProgressIndicator());

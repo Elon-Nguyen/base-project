@@ -11,13 +11,18 @@ import 'package:get_it/get_it.dart';
 final locator = GetIt.instance;
 
 void initApp() {
+  // State manager
   locator.registerLazySingleton(() => UserStore(locator()));
   
+  // View models
   locator.registerLazySingleton(() => UserViewModel(locator()));
   
+  // User cases
   locator.registerLazySingleton(() => GetUserDetails(locator()));
   
+  // Repositories
   locator.registerLazySingleton<UserRepository>(() => UserRepositoryImpl( locator()));
 
+  // Data sources
   locator.registerLazySingleton<UserRemoteDataSource>(() => UserRemoteDataSourceImpl());
 }

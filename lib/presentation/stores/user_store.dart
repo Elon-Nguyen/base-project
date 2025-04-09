@@ -19,8 +19,17 @@ abstract class _UserStore with Store {
   @action
   Future<void> fetchUserDetails(String userId) async {
     isLoading = true;
+
     try {
-      user = (await getUserDetails.execute(userId)) as User?;
+      final result = await getUserDetails.execute(userId);
+
+      result.fold(
+        (error) => print('Lỗi: $error'),
+        (usert) {
+          print('User: ${usert.name}');
+          user = usert;
+        },
+      );
     } catch (e) {
       user = null;
     } finally {

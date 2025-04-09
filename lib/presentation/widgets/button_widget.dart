@@ -43,19 +43,27 @@ class _ButtonWidgetState extends State<ButtonWidget> {
       child: Container(
         margin: widget.margin,
         padding: EdgeInsets.symmetric(vertical: 7, horizontal: 12),
-        width: widget.width != null ? widget.width : null,
+        width: widget.width,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(widget.borderRadius!),
           color:
               widget.canTap == true
-                  ? (widget.primaryColor != null ? widget.primaryColor : AppColors.blue2)
+                  ? (widget.primaryColor ?? AppColors.blue2)
                   : AppColors.grey,
         ),
         child: Center(
           child:
               widget.isLoading == false
-                  ? Text(widget.text!, style: widget.textStyle ?? context.textStyle.size16.w400.white)
-                  : Container(height: 15, width: 15, child: Center(child: CircularProgressIndicator())),
+                  ? Text(
+                    widget.text!,
+                    style:
+                        widget.textStyle ?? context.textStyle.size16.w400.white,
+                  )
+                  : Container(
+                    height: 15,
+                    width: 15,
+                    child: Center(child: CircularProgressIndicator()),
+                  ),
         ),
       ),
     );

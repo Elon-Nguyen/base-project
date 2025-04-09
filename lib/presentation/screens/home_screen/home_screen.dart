@@ -1,7 +1,5 @@
 import 'package:base_project/presentation/constants/app_text_style.dart';
 import 'package:base_project/presentation/widgets/button_widget.dart';
-import 'package:base_project/presentation/widgets/dialog/dialog_banner.dart';
-import 'package:base_project/presentation/widgets/dialog/dialog_comfirm.dart';
 import 'package:base_project/presentation/widgets/header.dart';
 import 'package:base_project/presentation/widgets/loading.dart';
 import 'package:base_project/presentation/widgets/textfield_widget.dart';
@@ -17,13 +15,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
+  final int _counter = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +28,10 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  Text('You have pushed the button this many times:', style: context.textStyle.size18.w400.black),
+                  Text(
+                    'You have pushed the button this many times:',
+                    style: context.textStyle.size18.w400.black,
+                  ),
                   Text('$_counter', style: context.textStyle.size22.w700.red),
                   TextFormFieldWidget(isPasswordField: true),
                   ButtonWidget(
@@ -56,8 +51,12 @@ class _HomeScreenState extends State<HomeScreen> {
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        // onPressed: _incrementCounter,
-        onPressed: () => CustomSnackBar.show(context: context, message: "aaaaaa", type: SnackBarType.info),
+        onPressed:
+            () => CustomSnackBar.show(
+              context: context,
+              message: "aaaaaa",
+              type: SnackBarType.info,
+            ),
         tooltip: 'Increment',
         child: const Icon(Icons.add),
       ),

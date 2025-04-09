@@ -1,5 +1,4 @@
 import 'package:base_project/presentation/screens/home_screen/home_screen.dart';
-import 'package:base_project/presentation/widgets/loading.dart';
 import 'package:flutter/material.dart';
 
 class App extends StatelessWidget {
@@ -8,8 +7,10 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple)),
+      title: 'Base Project',
+      theme: ThemeData(
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+      ),
       home: const HomeScreen(title: 'Base Project'),
     );
   }

@@ -1,4 +1,5 @@
 import 'package:base_project/presentation/screens/home_screen/home_screen.dart';
+import 'package:base_project/presentation/widgets/loading.dart';
 import 'package:flutter/material.dart';
 
 class App extends StatelessWidget {

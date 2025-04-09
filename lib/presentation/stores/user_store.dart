@@ -23,13 +23,10 @@ abstract class _UserStore with Store {
     try {
       final result = await getUserDetails.execute(userId);
 
-      result.fold(
-        (error) => print('Lỗi: $error'),
-        (usert) {
-          print('User: ${usert.name}');
-          user = usert;
-        },
-      );
+      result.fold((error) => print('Lỗi: $error'), (usert) {
+        print('User: ${usert.name}');
+        user = usert;
+      });
     } catch (e) {
       user = null;
     } finally {

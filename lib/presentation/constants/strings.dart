@@ -1,7 +1,8 @@
 class ConstString {
-  static const String AppName = "Base Project";
+  /// Name of app
+  static const String appName = 'Base Project';
 
-  static const String myId = "myId";
+  static const String myId = 'myId';
 
   static const int error500 = 500;
   static const int error404 = 404;

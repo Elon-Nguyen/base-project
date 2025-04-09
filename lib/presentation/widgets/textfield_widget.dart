@@ -13,9 +13,15 @@ class TextFormFieldWidget extends StatefulWidget {
   EdgeInsets? marginIn = EdgeInsets.zero;
   bool? isPasswordField = false;
   bool? hideText;
-  InputBorder? border = OutlineInputBorder(borderRadius: BorderRadius.circular(4));
-  InputBorder? focusBorder = OutlineInputBorder(borderRadius: BorderRadius.circular(4));
-  InputBorder? enableBorder = OutlineInputBorder(borderRadius: BorderRadius.circular(4));
+  InputBorder? border = OutlineInputBorder(
+    borderRadius: BorderRadius.circular(4),
+  );
+  InputBorder? focusBorder = OutlineInputBorder(
+    borderRadius: BorderRadius.circular(4),
+  );
+  InputBorder? enableBorder = OutlineInputBorder(
+    borderRadius: BorderRadius.circular(4),
+  );
   TextAlign? textAlign;
   TextStyle? inputTextStyle;
   bool? readOnly;
@@ -60,7 +66,10 @@ class _TextFormFieldWidgetState extends State<TextFormFieldWidget> {
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 8),
           margin: widget.marginOut,
-          decoration: BoxDecoration(color: AppColors.white, borderRadius: BorderRadius.circular(8)),
+          decoration: BoxDecoration(
+            color: AppColors.white,
+            borderRadius: BorderRadius.circular(8),
+          ),
           child: TextFormField(
             focusNode: widget.focusNode,
             inputFormatters: widget.formatter,
@@ -71,8 +80,12 @@ class _TextFormFieldWidgetState extends State<TextFormFieldWidget> {
             textAlign: widget.textAlign!,
             maxLines: widget.maxLine ?? 1,
             maxLength: widget.maxLength,
-            obscureText: widget.isPasswordField == true ? (widget.hideText!) : false,
-            style: widget.inputTextStyle != null ? widget.inputTextStyle : context.textStyle.size12.w500.black,
+            obscureText:
+                widget.isPasswordField == true ? (widget.hideText!) : false,
+            style:
+                widget.inputTextStyle != null
+                    ? widget.inputTextStyle
+                    : context.textStyle.size12.w500.black,
             decoration: InputDecoration(
               contentPadding: widget.marginIn,
               hintText: widget.hintText,
@@ -94,7 +107,11 @@ class _TextFormFieldWidgetState extends State<TextFormFieldWidget> {
                     widget.hideText = !widget.hideText!;
                   });
                 },
-                child: SvgPicture.asset(widget.hideText == true ? Assets.icons.eyeOff : Assets.icons.eyeOn),
+                child: SvgPicture.asset(
+                  widget.hideText == true
+                      ? Assets.icons.eyeOff
+                      : Assets.icons.eyeOn,
+                ),
               ),
             )
             : const SizedBox(),

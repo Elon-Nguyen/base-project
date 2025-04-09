@@ -7,22 +7,25 @@ import 'package:base_project/presentation/stores/user_store.dart';
 import 'package:base_project/presentation/view_models/user_view_model.dart';
 import 'package:get_it/get_it.dart';
 
-
 final locator = GetIt.instance;
 
 void initApp() {
   // State manager
   locator.registerLazySingleton(() => UserStore(locator()));
-  
+
   // View models
   locator.registerLazySingleton(() => UserViewModel(locator()));
-  
+
   // User cases
   locator.registerLazySingleton(() => GetUserDetails(locator()));
-  
+
   // Repositories
-  locator.registerLazySingleton<UserRepository>(() => UserRepositoryImpl( locator()));
+  locator.registerLazySingleton<UserRepository>(
+    () => UserRepositoryImpl(locator()),
+  );
 
   // Data sources
-  locator.registerLazySingleton<UserRemoteDataSource>(() => UserRemoteDataSourceImpl());
+  locator.registerLazySingleton<UserRemoteDataSource>(
+    () => UserRemoteDataSourceImpl(),
+  );
 }

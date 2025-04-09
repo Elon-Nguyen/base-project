@@ -57,9 +57,7 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       floatingActionButton: FloatingActionButton(
         // onPressed: _incrementCounter,
-        onPressed: () {
-          // CustomSnackBar.show(context: context, message: "aaaaaa", type: SnackBarType.info);
-        },
+        onPressed: () => CustomSnackBar.show(context: context, message: "aaaaaa", type: SnackBarType.info),
         tooltip: 'Increment',
         child: const Icon(Icons.add),
       ),

@@ -21,7 +21,6 @@ abstract class _UserStore with Store {
     isLoading = true;
     try {
       user = (await getUserDetails.execute(userId)) as User?;
-      print("User: ${user?.email}");
     } catch (e) {
       user = null;
     } finally {

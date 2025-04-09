@@ -1,11 +1,9 @@
-import 'package:base_project/presentation/viewmodels/user_viewmodel.dart';
+import 'package:base_project/di/service_locator.dart';
+import 'package:base_project/presentation/view_models/user_view_model.dart';
 import 'package:flutter/material.dart';
-import 'package:get_it/get_it.dart';
-
-final getIt = GetIt.instance;
 
 class UserDetailsScreen extends StatelessWidget {
-  final UserViewModel userViewModel = GetIt.I<UserViewModel>();
+  final UserViewModel userVM = locator<UserViewModel>();
 
   UserDetailsScreen({super.key});
 
@@ -14,13 +12,13 @@ class UserDetailsScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(title: Text("User Details")),
       body: FutureBuilder(
-        future: userViewModel.fetchUserDetails("user-id"),
+        future: userVM.fetchUserDetails("user-id"),
         builder: (context, snapshot) {
-          if (userViewModel.isLoading) {
+          if (userVM.isLoading) {
             return Center(child: CircularProgressIndicator());
           }
 
-          if (userViewModel.user == null) {
+          if (userVM.user == null) {
             return Center(child: Text('User not found'));
           }
 
@@ -30,15 +28,15 @@ class UserDetailsScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'ID: ${userViewModel.user?.id ?? ""}',
+                  'ID: ${userVM.user?.id ?? ""}',
                   style: TextStyle(fontSize: 20),
                 ),
                 Text(
-                  'Name: ${userViewModel.user?.name ?? ""}',
+                  'Name: ${userVM.user?.name ?? ""}',
                   style: TextStyle(fontSize: 20),
                 ),
                 Text(
-                  'Email: ${userViewModel.user?.email ?? ""}',
+                  'Email: ${userVM.user?.email ?? ""}',
                   style: TextStyle(fontSize: 20),
                 ),
               ],

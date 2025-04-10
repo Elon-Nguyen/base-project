@@ -15,7 +15,7 @@ void initApp() {
   locator
     ..registerLazySingleton(() => UserController(locator()))
     // View models
-    ..registerLazySingleton(() => UserViewModel)
+    ..registerLazySingleton(UserViewModel.new)
     // User cases
     ..registerLazySingleton(() => GetUserDetails(locator()))
     // Repositories

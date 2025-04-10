@@ -1,18 +1,39 @@
 import 'package:base_project/presentation/constants/app_text_style.dart';
+import 'package:base_project/presentation/constants/colors.dart';
 import 'package:base_project/presentation/gen/assets.gen.dart' show Assets;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-import '../constants/colors.dart';
-
 class TextFormFieldWidget extends StatefulWidget {
-  String? hintText = "";
+  TextFormFieldWidget({
+    super.key,
+    this.value,
+    this.controller,
+    this.readOnly,
+    this.hintText,
+    this.marginOut,
+    this.marginIn,
+    this.hideText,
+    this.isPasswordField,
+    this.inputTextStyle,
+    this.border,
+    this.enableBorder,
+    this.textAlign = TextAlign.start,
+    this.onChanged,
+    this.focusBorder,
+    this.maxLine,
+    this.maxLength,
+    this.focusNode,
+    this.formatter,
+  });
+
+  String? hintText = '';
   String? value;
   EdgeInsets? marginOut = EdgeInsets.zero;
   EdgeInsets? marginIn = EdgeInsets.zero;
   bool? isPasswordField = false;
-  bool? hideText;
+  bool? hideText = true;
   InputBorder? border = OutlineInputBorder(
     borderRadius: BorderRadius.circular(4),
   );
@@ -28,30 +49,9 @@ class TextFormFieldWidget extends StatefulWidget {
   FocusNode? focusNode;
   TextEditingController? controller;
   List<TextInputFormatter>? formatter;
-  Function(String)? onChanged;
+  void Function(String)? onChanged;
   int? maxLength;
   int? maxLine;
-  TextFormFieldWidget({
-    super.key,
-    this.value,
-    this.controller,
-    this.readOnly,
-    this.hintText,
-    this.marginOut,
-    this.marginIn,
-    this.hideText = true,
-    this.isPasswordField,
-    this.inputTextStyle,
-    this.border,
-    this.enableBorder,
-    this.textAlign = TextAlign.start,
-    this.onChanged,
-    this.focusBorder,
-    this.maxLine,
-    this.maxLength,
-    this.focusNode,
-    this.formatter,
-  });
 
   @override
   State<TextFormFieldWidget> createState() => _TextFormFieldWidgetState();
@@ -81,16 +81,13 @@ class _TextFormFieldWidgetState extends State<TextFormFieldWidget> {
             maxLines: widget.maxLine ?? 1,
             maxLength: widget.maxLength,
             obscureText:
-                widget.isPasswordField == true ? (widget.hideText!) : false,
-            style:
-                widget.inputTextStyle != null
-                    ? widget.inputTextStyle
-                    : context.textStyle.size12.w500.black,
+                (widget.isPasswordField ?? false) && (widget.hideText ?? false),
+            style: widget.inputTextStyle ?? context.textStyle.size12.w500.black,
             decoration: InputDecoration(
               contentPadding: widget.marginIn,
               hintText: widget.hintText,
               hintStyle: context.textStyle.size12.w500.grey,
-              labelStyle: TextStyle(color: AppColors.white),
+              labelStyle: const TextStyle(color: AppColors.white),
               fillColor: AppColors.white,
               border: widget.border,
               focusedBorder: widget.focusBorder,
@@ -98,23 +95,22 @@ class _TextFormFieldWidgetState extends State<TextFormFieldWidget> {
             ),
           ),
         ),
-        widget.isPasswordField == true
-            ? Positioned(
-              right: 10,
-              child: GestureDetector(
-                onTap: () {
-                  setState(() {
-                    widget.hideText = !widget.hideText!;
-                  });
-                },
-                child: SvgPicture.asset(
-                  widget.hideText == true
-                      ? Assets.icons.eyeOff
-                      : Assets.icons.eyeOn,
-                ),
+        if (widget.isPasswordField!)
+          Positioned(
+            right: 10,
+            child: GestureDetector(
+              onTap: () {
+                setState(() {
+                  widget.hideText = !widget.hideText!;
+                });
+              },
+              child: SvgPicture.asset(
+                widget.hideText! ? Assets.icons.eyeOff : Assets.icons.eyeOn,
               ),
-            )
-            : const SizedBox(),
+            ),
+          )
+        else
+          const SizedBox(),
       ],
     );
   }

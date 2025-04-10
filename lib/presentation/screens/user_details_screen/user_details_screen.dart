@@ -20,7 +20,6 @@ class UserDetailsScreen extends StatelessWidget {
           if (userVM.user == null) {
             return const Center(child: Text('User not found'));
           }
-
           return Padding(
             padding: const EdgeInsets.all(16),
             child: Column(

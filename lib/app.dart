@@ -1,7 +1,7 @@
 import 'package:base_project/presentation/constants/router_name.dart';
 import 'package:base_project/presentation/constants/strings.dart';
 import 'package:base_project/presentation/screens/home_screen/home_screen.dart';
-import 'package:base_project/presentation/screens/login/login_screen.dart';
+import 'package:base_project/presentation/screens/login_screen/login_screen.dart';
 import 'package:base_project/presentation/screens/user_details_screen/user_details_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

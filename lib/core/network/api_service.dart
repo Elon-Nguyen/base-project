@@ -1,5 +1,10 @@
 import 'dart:developer';
 
+import 'package:base_project/core/errors/bad_response.dart';
+import 'package:base_project/core/errors/network_exception.dart';
+import 'package:base_project/core/errors/request_cancelled.dart';
+import 'package:base_project/core/errors/server_timeout.dart';
+import 'package:base_project/core/errors/unknown_exception.dart';
 import 'package:base_project/presentation/constants/app_url.dart';
 import 'package:dio/dio.dart';
 
@@ -128,57 +133,22 @@ class ApiService {
         case DioExceptionType.connectionTimeout:
         case DioExceptionType.sendTimeout:
         case DioExceptionType.receiveTimeout:
-          return TimeoutException('Connection timed out');
+          return ServerTimeOut();
         case DioExceptionType.badResponse:
-          return BadResponseException(
-            statusCode: error.response?.statusCode,
-            message: 'Bad response',
-          );
+          return ServerBadResponse();
         case DioExceptionType.cancel:
-          return RequestCancelledException('Request was cancelled');
+          return RequestCancelled();
         case DioExceptionType.connectionError:
-          return NetworkException('No internet connection');
+          return NetworkException();
         case DioExceptionType.badCertificate:
           throw UnimplementedError();
         case DioExceptionType.unknown:
-          return UnknownException('An unknown error occurred');
+          return UnknownException();
       }
     }
+
     return UnknownException(error.toString());
   }
-}
-
-class ApiException implements Exception {
-  final String message;
-  ApiException(this.message);
-
-  @override
-  String toString() => message;
-}
-
-class TimeoutException extends ApiException {
-  TimeoutException(super.message);
-}
-
-class BadResponseException extends ApiException {
-  BadResponseException({required String message, this.statusCode})
-    : super(message);
-  final int? statusCode;
-
-  @override
-  String toString() => 'Status Code: $statusCode, Message: $message';
-}
-
-class RequestCancelledException extends ApiException {
-  RequestCancelledException(super.message);
-}
-
-class NetworkException extends ApiException {
-  NetworkException(super.message);
-}
-
-class UnknownException extends ApiException {
-  UnknownException(super.message);
 }
 
 // interceptors.dart

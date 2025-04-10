@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'package:base_project/core/errors/server_not_found.dart';
 import 'package:base_project/data/datasources/user_remote_data_source/user_remote_data_source.dart';
 import 'package:base_project/domain/entities/user.dart';
@@ -13,11 +12,8 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
     final response = await dio.get<Map<String, dynamic>>(
       'https://jsonplaceholder.typicode.com/users/1',
     );
-
     if (response.statusCode == 200) {
-      final Map<String, dynamic> json =
-          jsonDecode(response.data! as String) as Map<String, dynamic>;
-      final user = User.fromJson(json);
+      final user = User.fromJson(response.data!);
       return user;
     } else {
       throw ServerNotFound();

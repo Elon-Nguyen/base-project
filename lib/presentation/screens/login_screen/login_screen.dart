@@ -64,6 +64,7 @@ class LoginScreen extends StatelessWidget {
                     onTap: loginController.onClickLogin,
                     text: 'Login',
                     primaryColor: Colors.blueAccent,
+                    isLoading: loginController.isLoading,
                   ),
                 ),
               ],

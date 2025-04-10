@@ -7,9 +7,13 @@ import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 
 class LoginController extends GetxController {
+  LoginController(this.loginWithEmailPassword);
+
   final LoginWithEmailPassword loginWithEmailPassword;
 
-  LoginController(this.loginWithEmailPassword);
+  final RxBool _isLoading = false.obs;
+  // Getter for isLoading
+  bool get isLoading => _isLoading.value;
 
   final TextEditingController userNameEditController = TextEditingController();
   final TextEditingController passwordEditController = TextEditingController();
@@ -29,10 +33,12 @@ class LoginController extends GetxController {
       return;
     }
 
+    _isLoading.value = true;
     final result = await loginWithEmailPassword.execute(
       userNameEditController.text.trim(),
       passwordEditController.text.trim(),
     );
+    _isLoading.value = false;
 
     result.fold(
       (error) => log('Lỗi: $error'),

@@ -20,18 +20,12 @@ class UserController extends GetxController {
 
   Future<void> fetchUserDetails(String userId) async {
     _isLoading.value = true;
+    final result = await getUserDetails.execute(userId);
+    _isLoading.value = false;
 
-    try {
-      final result = await getUserDetails.execute(userId);
-
-      result.fold(
-        (error) => log('Lỗi: $error'),
-        (userData) => _user.value = userData,
-      );
-    } catch (e) {
-      _user.value = null;
-    } finally {
-      _isLoading.value = false;
-    }
+    result.fold(
+      (error) => log('Lỗi: $error'),
+      (userData) => _user.value = userData,
+    );
   }
 }

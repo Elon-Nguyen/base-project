@@ -24,10 +24,10 @@ class UserController extends GetxController {
     try {
       final result = await getUserDetails.execute(userId);
 
-      result.fold((error) => log('Lỗi: $error'), (userData) {
-        log('User: ${userData.name}');
-        _user.value = userData;
-      });
+      result.fold(
+        (error) => log('Lỗi: $error'),
+        (userData) => _user.value = userData,
+      );
     } catch (e) {
       _user.value = null;
     } finally {

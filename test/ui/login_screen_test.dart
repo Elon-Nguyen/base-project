@@ -1,4 +1,5 @@
 import 'package:base_project/di/service_locator.dart';
+import 'package:base_project/domain/usercases/login_with_email_password.dart';
 import 'package:base_project/presentation/controllers/login_controller.dart';
 import 'package:base_project/presentation/screens/login_screen/login_screen.dart';
 import 'package:flutter/material.dart';
@@ -18,7 +19,7 @@ class MockLoginController extends GetxController implements LoginController {
   final erroText = ''.obs;
 
   @override
-  void onClickLogin() {}
+  Future<void> onClickLogin() async {}
 
   @override
   set erroText(RxString erroText) {}
@@ -27,6 +28,10 @@ class MockLoginController extends GetxController implements LoginController {
   String validateLogin() {
     throw UnimplementedError();
   }
+
+  @override
+  LoginWithEmailPassword get loginWithEmailPassword =>
+      throw UnimplementedError();
 }
 
 void main() {

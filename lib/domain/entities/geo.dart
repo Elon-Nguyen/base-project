@@ -1,8 +1,18 @@
 class Geo {
-  final String lat;
-  final String lng;
+  Geo({this.lat, this.lng});
 
-  Geo({required this.lat, required this.lng});
+  String? lat;
+  String? lng;
 
-  factory Geo.fromJson(Map<String, dynamic> json) => Geo(lat: json['lat'].toString(), lng: json['lng'].toString());
+  Geo.fromJson(Map<String, dynamic> json) {
+    lat = json['lat'] as String;
+    lng = json['lng'] as String;
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = Map<String, dynamic>();
+    data['lat'] = lat;
+    data['lng'] = lng;
+    return data;
+  }
 }

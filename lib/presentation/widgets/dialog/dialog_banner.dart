@@ -3,15 +3,15 @@ import 'package:base_project/presentation/constants/colors.dart';
 import 'package:flutter/material.dart';
 
 class DialogBanned extends StatelessWidget {
+  DialogBanned({super.key, this.title, this.onTap, this.style});
+
   String? title;
   TextStyle? style;
-  Function()? onTap;
-
-  DialogBanned({super.key, this.title, this.onTap, this.style});
+  void Function()? onTap;
 
   @override
   Widget build(BuildContext context) {
-    return (AlertDialog(
+    return AlertDialog(
       backgroundColor: Colors.white,
       content: Column(
         mainAxisSize: MainAxisSize.min,
@@ -24,11 +24,11 @@ class DialogBanned extends StatelessWidget {
               // margin: EdgeInsets.symmetric(horizontal: 50),
               padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 50),
               decoration: BoxDecoration(borderRadius: BorderRadius.circular(8), color: AppColors.blue2),
-              child: Text("OK", style: context.textStyle.size12.w500.white),
+              child: Text('OK', style: context.textStyle.size12.w500.white),
             ),
           ),
         ],
       ),
-    ));
+    );
   }
 }

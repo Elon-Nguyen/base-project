@@ -1,8 +1,10 @@
+import 'dart:developer';
+
 import 'package:base_project/presentation/constants/app_text_style.dart';
+import 'package:base_project/presentation/gen/assets.gen.dart';
 import 'package:base_project/presentation/widgets/button_widget.dart';
 import 'package:base_project/presentation/widgets/custom_snack_bar.dart';
 import 'package:base_project/presentation/widgets/header.dart';
-import 'package:base_project/presentation/widgets/loading.dart';
 import 'package:base_project/presentation/widgets/textfield_widget.dart';
 import 'package:flutter/material.dart';
 
@@ -22,7 +24,13 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       body: Column(
         children: [
-          Header(title: widget.title),
+          Header(
+            title: widget.title,
+            iconLeft: Assets.icons.iconX,
+            functionLeft: () {
+              log('object');
+            },
+          ),
           Expanded(
             child: Center(
               child: Column(
@@ -35,10 +43,10 @@ class _HomeScreenState extends State<HomeScreen> {
                     margin: const EdgeInsets.symmetric(vertical: 20, horizontal: 50),
                     text: 'Button 1',
                     onTap: () {
-                      Loading.show(context);
-                      Future.delayed(const Duration(seconds: 3), () {
-                        // Loading.hide(context);
-                      });
+                      // Loading.show(context);
+                      // Future.delayed(const Duration(seconds: 3), () {
+                      //   Loading.hide(context);
+                      // });
                     },
                   ),
                 ],
@@ -48,12 +56,7 @@ class _HomeScreenState extends State<HomeScreen> {
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed:
-            () => CustomSnackBar.show(
-              context: context,
-              message: 'aaaaaa',
-              // type: SnackBarType.info,
-            ),
+        onPressed: () => CustomSnackBar.show(context: context, message: 'aaaaaa', type: SnackBarType.error),
         tooltip: 'Increment',
         child: const Icon(Icons.add),
       ),

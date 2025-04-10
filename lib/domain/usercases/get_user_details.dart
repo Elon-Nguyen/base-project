@@ -1,7 +1,7 @@
 import 'package:base_project/core/errors/failure.dart';
 import 'package:base_project/domain/entities/user.dart';
-import 'package:dartz/dartz.dart';
 import 'package:base_project/domain/repositories/user_repository.dart';
+import 'package:dartz/dartz.dart';
 
 class GetUserDetails {
   final UserRepository repository;
@@ -9,6 +9,6 @@ class GetUserDetails {
   GetUserDetails(this.repository);
 
   Future<Either<Failure, User>> execute(String userId) async {
-    return await repository.getUserDetails(userId);
+    return repository.getUserDetails(userId);
   }
 }

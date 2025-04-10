@@ -1,19 +1,31 @@
-import './geo.dart';
+import 'package:base_project/domain/entities/geo.dart';
 
 class Address {
-  final String street;
-  final String suite;
-  final String city;
-  final String zipcode;
-  final Geo geo;
+  Address({this.street, this.suite, this.city, this.zipcode, this.geo});
 
-  Address({required this.street, required this.suite, required this.city, required this.zipcode, required this.geo});
+  String? street;
+  String? suite;
+  String? city;
+  String? zipcode;
+  Geo? geo;
 
-  factory Address.fromJson(Map<String, dynamic> json) => Address(
-    street: json['street'],
-    suite: json['suite'],
-    city: json['city'],
-    zipcode: json['zipcode'],
-    geo: Geo.fromJson(json['geo']),
-  );
+  Address.fromJson(Map<String, dynamic> json) {
+    street = json['street'] as String;
+    suite = json['suite'] as String;
+    city = json['city'] as String;
+    zipcode = json['zipcode'] as String;
+    geo = json['geo'] != null ? Geo.fromJson(json['geo'] as Map<String, dynamic>) : null;
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = Map<String, dynamic>();
+    data['street'] = street;
+    data['suite'] = suite;
+    data['city'] = city;
+    data['zipcode'] = zipcode;
+    if (geo != null) {
+      data['geo'] = geo!.toJson();
+    }
+    return data;
+  }
 }

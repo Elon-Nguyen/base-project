@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:base_project/domain/entities/user.dart';
 import 'package:base_project/domain/usercases/get_user_details.dart';
 import 'package:mobx/mobx.dart';
@@ -23,8 +25,8 @@ abstract class _UserStore with Store {
     try {
       final result = await getUserDetails.execute(userId);
 
-      result.fold((error) => print('Lỗi: $error'), (usert) {
-        print('User: ${usert.name}');
+      result.fold((error) => log('Lỗi: $error'), (usert) {
+        log('User: ${usert.name}');
         user = usert;
       });
     } catch (e) {

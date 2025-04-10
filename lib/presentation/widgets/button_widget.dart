@@ -1,19 +1,8 @@
 import 'package:base_project/presentation/constants/app_text_style.dart';
+import 'package:base_project/presentation/constants/colors.dart';
 import 'package:flutter/material.dart';
 
-import '../constants/colors.dart';
-
 class ButtonWidget extends StatefulWidget {
-  String? text = "";
-  bool? canTap;
-  double? width;
-  double? borderRadius;
-  EdgeInsets? margin = EdgeInsets.symmetric(vertical: 30);
-  Color? primaryColor = AppColors.blueIndigo;
-  TextStyle? textStyle;
-  bool? isLoading;
-  Function()? onTap;
-
   ButtonWidget({
     super.key,
     this.text,
@@ -27,6 +16,16 @@ class ButtonWidget extends StatefulWidget {
     this.textStyle,
   });
 
+  String? text = '';
+  bool? canTap;
+  double? width;
+  double? borderRadius;
+  EdgeInsets? margin = const EdgeInsets.symmetric(vertical: 30);
+  Color? primaryColor = AppColors.blueIndigo;
+  TextStyle? textStyle;
+  bool? isLoading;
+  void Function()? onTap;
+
   @override
   State<ButtonWidget> createState() => _ButtonWidgetState();
 }
@@ -36,23 +35,23 @@ class _ButtonWidgetState extends State<ButtonWidget> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        if (widget.canTap == true && widget.onTap != null) {
+        if (widget.canTap! == true && widget.onTap != null) {
           widget.onTap!();
         }
       },
       child: Container(
         margin: widget.margin,
-        padding: EdgeInsets.symmetric(vertical: 7, horizontal: 12),
+        padding: const EdgeInsets.symmetric(vertical: 7, horizontal: 12),
         width: widget.width,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(widget.borderRadius!),
-          color: widget.canTap == true ? (widget.primaryColor ?? AppColors.blue2) : AppColors.grey,
+          color: widget.canTap! == true ? (widget.primaryColor ?? AppColors.blue2) : AppColors.grey,
         ),
         child: Center(
           child:
               widget.isLoading == false
                   ? Text(widget.text!, style: widget.textStyle ?? context.textStyle.size16.w400.white)
-                  : Container(height: 15, width: 15, child: Center(child: CircularProgressIndicator())),
+                  : const SizedBox(height: 15, width: 15, child: Center(child: CircularProgressIndicator())),
         ),
       ),
     );

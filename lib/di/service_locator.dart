@@ -11,17 +11,14 @@ final locator = GetIt.instance;
 
 void initApp() {
   // State manager
-  locator.registerLazySingleton(() => UserStore(locator()));
-
-  // View models
-  locator.registerLazySingleton(() => UserViewModel(locator()));
-
-  // User cases
-  locator.registerLazySingleton(() => GetUserDetails(locator()));
-
-  // Repositories
-  locator.registerLazySingleton<UserRepository>(() => UserRepositoryImpl(locator()));
-
-  // Data sources
-  locator.registerLazySingleton<UserRemoteDataSource>(() => UserRemoteDataSourceImpl());
+  locator
+    ..registerLazySingleton(() => UserStore(locator()))
+    // View models
+    ..registerLazySingleton(() => UserViewModel(locator()))
+    // User cases
+    ..registerLazySingleton(() => GetUserDetails(locator()))
+    // Repositories
+    ..registerLazySingleton<UserRepository>(() => UserRepositoryImpl(locator()))
+    // Data sources
+    ..registerLazySingleton<UserRemoteDataSource>(UserRemoteDataSourceImpl.new);
 }

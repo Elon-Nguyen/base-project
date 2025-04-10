@@ -1,7 +1,6 @@
+import 'package:base_project/presentation/constants/colors.dart';
+import 'package:base_project/presentation/gen/fonts.gen.dart';
 import 'package:flutter/material.dart';
-
-import '../gen/fonts.gen.dart';
-import 'colors.dart';
 
 extension TextThemeExt on BuildContext {
   AppTextStyle get textStyle => AppTextStyle(); // context.textStyle
@@ -36,9 +35,9 @@ extension TextStyleExt on TextStyle {
 }
 
 class AppTextStyle {
+  factory AppTextStyle() => _instance;
   AppTextStyle._init();
   static final AppTextStyle _instance = AppTextStyle._init();
-  factory AppTextStyle() => _instance;
 
   final TextStyle size10 = const TextStyle(fontSize: 10, fontWeight: FontWeight.normal, fontFamily: FontFamily.inter);
 

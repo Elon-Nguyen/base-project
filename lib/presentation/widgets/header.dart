@@ -7,9 +7,9 @@ class Header extends StatelessWidget {
   final String title;
   final String? iconLeft;
   final String? iconRight;
-  final Function? functionLeft;
-  final Function? functionRight;
-  const Header({super.key, required this.title, this.iconLeft, this.iconRight, this.functionLeft, this.functionRight});
+  final void Function()? functionLeft;
+  final void Function()? functionRight;
+  const Header({required this.title, super.key, this.iconLeft, this.iconRight, this.functionLeft, this.functionRight});
 
   @override
   Widget build(BuildContext context) {
@@ -18,19 +18,18 @@ class Header extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          iconLeft != null
-              ? GestureDetector(
-                onTap: () => functionLeft != null ? functionLeft!() : null,
-                child: SvgPicture.asset(iconLeft!, width: 24, height: 24),
-              )
-              : const SizedBox(height: 24, width: 24),
+          if (iconLeft != null)
+            GestureDetector(
+              onTap: () => functionLeft!(),
+              child: SvgPicture.asset(iconLeft!, width: 24, height: 24, color: Colors.amberAccent),
+            )
+          else
+            const SizedBox(height: 24, width: 24),
           Text(title, style: context.textStyle.size16.w500.black),
-          iconRight != null
-              ? GestureDetector(
-                onTap: () => functionRight != null ? functionRight!() : null,
-                child: SvgPicture.asset(iconRight!, width: 24, height: 24),
-              )
-              : const SizedBox(height: 24, width: 24),
+          if (iconRight != null)
+            GestureDetector(onTap: () => functionRight!(), child: SvgPicture.asset(iconRight!, width: 24, height: 24))
+          else
+            const SizedBox(height: 24, width: 24),
         ],
       ),
     );

@@ -30,23 +30,18 @@ class CustomSnackBar {
         backgroundColor = Colors.green.shade800;
         iconColor = Colors.white;
         iconData = Icons.check_circle_outline;
-        break;
       case SnackBarType.warning:
         backgroundColor = Colors.orange.shade800;
         iconColor = Colors.white;
         iconData = Icons.warning_amber_outlined;
-        break;
       case SnackBarType.error:
         backgroundColor = Colors.red.shade800;
         iconColor = Colors.white;
         iconData = Icons.error_outline;
-        break;
       case SnackBarType.info:
-      default:
         backgroundColor = colorScheme.primary;
         iconColor = colorScheme.onPrimary;
         iconData = Icons.info_outline;
-        break;
     }
 
     final snackBar = SnackBar(
@@ -86,20 +81,20 @@ class CustomSnackBar {
 
 /// Custom SnackBar widget that can be used in any widget
 class CustomSnackBarWidget extends StatelessWidget {
+  const CustomSnackBarWidget({
+    required this.message,
+    super.key,
+    this.type = SnackBarType.info,
+    this.onActionPressed,
+    this.actionLabel,
+    this.showCloseIcon = true,
+  });
+
   final String message;
   final SnackBarType type;
   final VoidCallback? onActionPressed;
   final String? actionLabel;
   final bool showCloseIcon;
-
-  const CustomSnackBarWidget({
-    Key? key,
-    required this.message,
-    this.type = SnackBarType.info,
-    this.onActionPressed,
-    this.actionLabel,
-    this.showCloseIcon = true,
-  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -113,23 +108,18 @@ class CustomSnackBarWidget extends StatelessWidget {
         backgroundColor = Colors.green.shade50;
         textColor = Colors.green.shade900;
         iconData = Icons.check_circle;
-        break;
       case SnackBarType.warning:
         backgroundColor = Colors.orange.shade50;
         textColor = Colors.orange.shade900;
         iconData = Icons.warning_amber;
-        break;
       case SnackBarType.error:
         backgroundColor = Colors.red.shade50;
         textColor = Colors.red.shade900;
         iconData = Icons.error;
-        break;
       case SnackBarType.info:
-      default:
         backgroundColor = Colors.blue.shade50;
         textColor = Colors.blue.shade900;
         iconData = Icons.info;
-        break;
     }
 
     return Container(
@@ -164,7 +154,7 @@ class CustomSnackBarWidget extends StatelessWidget {
                 // Handle close widget if needed
               },
               borderRadius: BorderRadius.circular(50),
-              child: Padding(padding: const EdgeInsets.all(4.0), child: Icon(Icons.close, color: textColor, size: 20)),
+              child: Padding(padding: const EdgeInsets.all(4), child: Icon(Icons.close, color: textColor, size: 20)),
             ),
           ],
         ],

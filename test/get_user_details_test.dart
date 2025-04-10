@@ -22,7 +22,7 @@ void main() {
   final user = User(id: 1, name: 'Test User', email: 'test@example.com');
 
   test(
-    'GetUserDetails usecase should return user details successfully',
+    "GetUserDetails usecase should return user details successfully",
     () async* {
       when(
         mockUserRepository.getUserDetails('userId'),

@@ -1,5 +1,5 @@
 class AppUrl {
-  static const String url = 'https://apptext.ddns.net:3004/api/v1/';
+  static const String url = 'https://jsonplaceholder.typicode.com/';
 
   static const String version = '';
 

@@ -1,7 +1,7 @@
 import 'package:base_project/di/service_locator.dart';
 import 'package:base_project/presentation/constants/app_text_style.dart';
 import 'package:base_project/presentation/constants/values.dart';
-import 'package:base_project/presentation/controllers/login_controller.dart';
+import 'package:base_project/presentation/screens/login_screen/login_controller.dart';
 import 'package:base_project/presentation/widgets/button_widget.dart';
 import 'package:base_project/presentation/widgets/textfield_widget.dart';
 import 'package:flutter/material.dart';
@@ -64,7 +64,6 @@ class LoginScreen extends StatelessWidget {
                     onTap: loginController.onClickLogin,
                     text: 'Login',
                     primaryColor: Colors.blueAccent,
-                    isLoading: loginController.isLoading,
                   ),
                 ),
               ],

@@ -11,10 +11,6 @@ class LoginController extends GetxController {
 
   final LoginWithEmailPassword loginWithEmailPassword;
 
-  final RxBool _isLoading = false.obs;
-  // Getter for isLoading
-  bool get isLoading => _isLoading.value;
-
   final TextEditingController userNameEditController = TextEditingController();
   final TextEditingController passwordEditController = TextEditingController();
 
@@ -33,12 +29,10 @@ class LoginController extends GetxController {
       return;
     }
 
-    _isLoading.value = true;
     final result = await loginWithEmailPassword.execute(
       userNameEditController.text.trim(),
       passwordEditController.text.trim(),
     );
-    _isLoading.value = false;
 
     result.fold(
       (error) => log('Lỗi: $error'),

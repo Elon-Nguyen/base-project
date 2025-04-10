@@ -49,7 +49,12 @@ class CustomSnackBar {
         children: [
           Icon(iconData, color: iconColor),
           const SizedBox(width: 12),
-          Expanded(child: Text(message, style: TextStyle(color: iconColor, fontSize: 16))),
+          Expanded(
+            child: Text(
+              message,
+              style: TextStyle(color: iconColor, fontSize: 16),
+            ),
+          ),
         ],
       ),
       backgroundColor: backgroundColor,
@@ -127,13 +132,24 @@ class CustomSnackBarWidget extends StatelessWidget {
       decoration: BoxDecoration(
         color: backgroundColor,
         borderRadius: BorderRadius.circular(8),
-        boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.1), blurRadius: 4, offset: const Offset(0, 2))],
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.1),
+            blurRadius: 4,
+            offset: const Offset(0, 2),
+          ),
+        ],
       ),
       child: Row(
         children: [
           Icon(iconData, color: textColor, size: 24),
           const SizedBox(width: 12),
-          Expanded(child: Text(message, style: TextStyle(color: textColor, fontSize: 16))),
+          Expanded(
+            child: Text(
+              message,
+              style: TextStyle(color: textColor, fontSize: 16),
+            ),
+          ),
           if (onActionPressed != null && actionLabel != null) ...[
             const SizedBox(width: 8),
             TextButton(
@@ -144,7 +160,10 @@ class CustomSnackBarWidget extends StatelessWidget {
                 minimumSize: const Size(0, 36),
                 tapTargetSize: MaterialTapTargetSize.shrinkWrap,
               ),
-              child: Text(actionLabel!, style: TextStyle(color: textColor, fontWeight: FontWeight.bold)),
+              child: Text(
+                actionLabel!,
+                style: TextStyle(color: textColor, fontWeight: FontWeight.bold),
+              ),
             ),
           ],
           if (showCloseIcon) ...[
@@ -154,7 +173,10 @@ class CustomSnackBarWidget extends StatelessWidget {
                 // Handle close widget if needed
               },
               borderRadius: BorderRadius.circular(50),
-              child: Padding(padding: const EdgeInsets.all(4), child: Icon(Icons.close, color: textColor, size: 20)),
+              child: Padding(
+                padding: const EdgeInsets.all(4),
+                child: Icon(Icons.close, color: textColor, size: 20),
+              ),
             ),
           ],
         ],

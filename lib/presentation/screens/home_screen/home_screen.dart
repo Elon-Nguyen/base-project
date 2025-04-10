@@ -40,7 +40,10 @@ class _HomeScreenState extends State<HomeScreen> {
                   Text('$_counter'),
                   TextFormFieldWidget(isPasswordField: true),
                   ButtonWidget(
-                    margin: const EdgeInsets.symmetric(vertical: 20, horizontal: 50),
+                    margin: const EdgeInsets.symmetric(
+                      vertical: 20,
+                      horizontal: 50,
+                    ),
                     text: 'Button 1',
                     onTap: () {
                       // Loading.show(context);
@@ -56,7 +59,12 @@ class _HomeScreenState extends State<HomeScreen> {
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => CustomSnackBar.show(context: context, message: 'aaaaaa', type: SnackBarType.error),
+        onPressed:
+            () => CustomSnackBar.show(
+              context: context,
+              message: 'aaaaaa',
+              type: SnackBarType.error,
+            ),
         tooltip: 'Increment',
         child: const Icon(Icons.add),
       ),

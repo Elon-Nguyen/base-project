@@ -22,7 +22,10 @@ mixin _$UserStore on _UserStore, Store {
     });
   }
 
-  late final _$isLoadingAtom = Atom(name: '_UserStore.isLoading', context: context);
+  late final _$isLoadingAtom = Atom(
+    name: '_UserStore.isLoading',
+    context: context,
+  );
 
   @override
   bool get isLoading {
@@ -37,11 +40,16 @@ mixin _$UserStore on _UserStore, Store {
     });
   }
 
-  late final _$fetchUserDetailsAsyncAction = AsyncAction('_UserStore.fetchUserDetails', context: context);
+  late final _$fetchUserDetailsAsyncAction = AsyncAction(
+    '_UserStore.fetchUserDetails',
+    context: context,
+  );
 
   @override
   Future<void> fetchUserDetails(String userId) {
-    return _$fetchUserDetailsAsyncAction.run(() => super.fetchUserDetails(userId));
+    return _$fetchUserDetailsAsyncAction.run(
+      () => super.fetchUserDetails(userId),
+    );
   }
 
   @override

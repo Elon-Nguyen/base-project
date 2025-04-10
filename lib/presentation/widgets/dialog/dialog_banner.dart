@@ -16,14 +16,21 @@ class DialogBanned extends StatelessWidget {
       content: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Text(textAlign: TextAlign.center, title ?? 'Done!', style: style ?? context.textStyle.size12.w500.black),
+          Text(
+            textAlign: TextAlign.center,
+            title ?? 'Done!',
+            style: style ?? context.textStyle.size12.w500.black,
+          ),
           const SizedBox(height: 16),
           GestureDetector(
             onTap: onTap,
             child: Container(
               // margin: EdgeInsets.symmetric(horizontal: 50),
               padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 50),
-              decoration: BoxDecoration(borderRadius: BorderRadius.circular(8), color: AppColors.blue2),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(8),
+                color: AppColors.blue2,
+              ),
               child: Text('OK', style: context.textStyle.size12.w500.white),
             ),
           ),

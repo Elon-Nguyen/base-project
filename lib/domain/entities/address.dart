@@ -14,7 +14,10 @@ class Address {
     suite = json['suite'] as String;
     city = json['city'] as String;
     zipcode = json['zipcode'] as String;
-    geo = json['geo'] != null ? Geo.fromJson(json['geo'] as Map<String, dynamic>) : null;
+    geo =
+        json['geo'] != null
+            ? Geo.fromJson(json['geo'] as Map<String, dynamic>)
+            : null;
   }
 
   Map<String, dynamic> toJson() {

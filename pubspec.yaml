@@ -60,7 +60,7 @@ dev_dependencies:
   lint_staged: ^0.5.1
 
 lint_staged:
-  'lib/**.dart': dart format -l 120 && dart analyze
+  'lib/**.dart': dart format -l 80 && dart analyze
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

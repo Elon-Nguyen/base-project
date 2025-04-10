@@ -39,22 +39,62 @@ class AppTextStyle {
   AppTextStyle._init();
   static final AppTextStyle _instance = AppTextStyle._init();
 
-  final TextStyle size10 = const TextStyle(fontSize: 10, fontWeight: FontWeight.normal, fontFamily: FontFamily.inter);
+  final TextStyle size10 = const TextStyle(
+    fontSize: 10,
+    fontWeight: FontWeight.normal,
+    fontFamily: FontFamily.inter,
+  );
 
-  final TextStyle size12 = const TextStyle(fontSize: 12, fontWeight: FontWeight.normal, fontFamily: FontFamily.inter);
+  final TextStyle size12 = const TextStyle(
+    fontSize: 12,
+    fontWeight: FontWeight.normal,
+    fontFamily: FontFamily.inter,
+  );
 
-  final TextStyle size14 = const TextStyle(fontSize: 14, fontWeight: FontWeight.normal, fontFamily: FontFamily.inter);
+  final TextStyle size14 = const TextStyle(
+    fontSize: 14,
+    fontWeight: FontWeight.normal,
+    fontFamily: FontFamily.inter,
+  );
 
-  final TextStyle size16 = const TextStyle(fontSize: 16, fontWeight: FontWeight.normal, fontFamily: FontFamily.inter);
+  final TextStyle size16 = const TextStyle(
+    fontSize: 16,
+    fontWeight: FontWeight.normal,
+    fontFamily: FontFamily.inter,
+  );
 
-  final TextStyle size18 = const TextStyle(fontSize: 18, fontWeight: FontWeight.normal, fontFamily: FontFamily.inter);
+  final TextStyle size18 = const TextStyle(
+    fontSize: 18,
+    fontWeight: FontWeight.normal,
+    fontFamily: FontFamily.inter,
+  );
 
-  final TextStyle size20 = const TextStyle(fontSize: 20, fontWeight: FontWeight.normal, fontFamily: FontFamily.inter);
+  final TextStyle size20 = const TextStyle(
+    fontSize: 20,
+    fontWeight: FontWeight.normal,
+    fontFamily: FontFamily.inter,
+  );
 
-  final TextStyle size22 = const TextStyle(fontSize: 22, fontWeight: FontWeight.normal, fontFamily: FontFamily.inter);
+  final TextStyle size22 = const TextStyle(
+    fontSize: 22,
+    fontWeight: FontWeight.normal,
+    fontFamily: FontFamily.inter,
+  );
 
-  final TextStyle size24 = const TextStyle(fontSize: 24, fontWeight: FontWeight.normal, fontFamily: FontFamily.inter);
+  final TextStyle size24 = const TextStyle(
+    fontSize: 24,
+    fontWeight: FontWeight.normal,
+    fontFamily: FontFamily.inter,
+  );
 
-  final TextStyle size26 = const TextStyle(fontSize: 26, fontWeight: FontWeight.normal, fontFamily: FontFamily.inter);
-  final TextStyle size28 = const TextStyle(fontSize: 28, fontWeight: FontWeight.normal, fontFamily: FontFamily.inter);
+  final TextStyle size26 = const TextStyle(
+    fontSize: 26,
+    fontWeight: FontWeight.normal,
+    fontFamily: FontFamily.inter,
+  );
+  final TextStyle size28 = const TextStyle(
+    fontSize: 28,
+    fontWeight: FontWeight.normal,
+    fontFamily: FontFamily.inter,
+  );
 }

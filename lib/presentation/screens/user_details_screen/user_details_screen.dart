@@ -26,9 +26,18 @@ class UserDetailsScreen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('ID: ${userVM.user?.id ?? ""}', style: const TextStyle(fontSize: 20)),
-                Text('Name: ${userVM.user?.name ?? ""}', style: const TextStyle(fontSize: 20)),
-                Text('Email: ${userVM.user?.email ?? ""}', style: const TextStyle(fontSize: 20)),
+                Text(
+                  'ID: ${userVM.user?.id ?? ""}',
+                  style: const TextStyle(fontSize: 20),
+                ),
+                Text(
+                  'Name: ${userVM.user?.name ?? ""}',
+                  style: const TextStyle(fontSize: 20),
+                ),
+                Text(
+                  'Email: ${userVM.user?.email ?? ""}',
+                  style: const TextStyle(fontSize: 20),
+                ),
               ],
             ),
           );

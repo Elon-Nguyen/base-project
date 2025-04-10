@@ -45,13 +45,24 @@ class _ButtonWidgetState extends State<ButtonWidget> {
         width: widget.width,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(widget.borderRadius!),
-          color: widget.canTap! == true ? (widget.primaryColor ?? AppColors.blue2) : AppColors.grey,
+          color:
+              widget.canTap! == true
+                  ? (widget.primaryColor ?? AppColors.blue2)
+                  : AppColors.grey,
         ),
         child: Center(
           child:
               widget.isLoading == false
-                  ? Text(widget.text!, style: widget.textStyle ?? context.textStyle.size16.w400.white)
-                  : const SizedBox(height: 15, width: 15, child: Center(child: CircularProgressIndicator())),
+                  ? Text(
+                    widget.text!,
+                    style:
+                        widget.textStyle ?? context.textStyle.size16.w400.white,
+                  )
+                  : const SizedBox(
+                    height: 15,
+                    width: 15,
+                    child: Center(child: CircularProgressIndicator()),
+                  ),
         ),
       ),
     );

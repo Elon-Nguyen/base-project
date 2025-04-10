@@ -1,15 +1,23 @@
 import 'package:base_project/domain/entities/user.dart';
-import 'package:base_project/presentation/stores/user_store.dart';
+import 'package:base_project/presentation/controllers/user_controller.dart';
+import 'package:get/get.dart';
 
 class UserViewModel {
-  final UserStore userStore;
+  late final UserController _userController;
 
-  UserViewModel(this.userStore);
-
-  Future<void> fetchUserDetails(String userId) async {
-    await userStore.fetchUserDetails(userId);
+  UserViewModel() {
+    // Get the controller instance using GetX dependency injection
+    _userController = Get.find<UserController>();
   }
 
-  bool get isLoading => userStore.isLoading;
-  User? get user => userStore.user;
+  // Alternative constructor if you want to inject the controller manually
+  UserViewModel.withController(this._userController);
+
+  Future<void> fetchUserDetails(String userId) async {
+    await _userController.fetchUserDetails(userId);
+  }
+
+  // Using getters that access the controller properties
+  bool get isLoading => _userController.isLoading;
+  User? get user => _userController.user;
 }

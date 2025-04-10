@@ -11,10 +11,9 @@ class TextFormFieldWidget extends StatefulWidget {
     this.value,
     this.controller,
     this.readOnly,
-    this.hintText,
+
     this.marginOut,
     this.marginIn,
-    this.hideText,
     this.isPasswordField,
     this.inputTextStyle,
     this.border,
@@ -33,7 +32,6 @@ class TextFormFieldWidget extends StatefulWidget {
   EdgeInsets? marginOut = EdgeInsets.zero;
   EdgeInsets? marginIn = EdgeInsets.zero;
   bool? isPasswordField = false;
-  bool? hideText = true;
   InputBorder? border = OutlineInputBorder(
     borderRadius: BorderRadius.circular(4),
   );
@@ -58,6 +56,8 @@ class TextFormFieldWidget extends StatefulWidget {
 }
 
 class _TextFormFieldWidgetState extends State<TextFormFieldWidget> {
+  bool hideText = true;
+
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -80,8 +80,7 @@ class _TextFormFieldWidgetState extends State<TextFormFieldWidget> {
             textAlign: widget.textAlign!,
             maxLines: widget.maxLine ?? 1,
             maxLength: widget.maxLength,
-            obscureText:
-                (widget.isPasswordField ?? false) && (widget.hideText ?? false),
+            obscureText: (widget.isPasswordField ?? false) && hideText,
             style: widget.inputTextStyle ?? context.textStyle.size12.w500.black,
             decoration: InputDecoration(
               contentPadding: widget.marginIn,
@@ -95,17 +94,17 @@ class _TextFormFieldWidgetState extends State<TextFormFieldWidget> {
             ),
           ),
         ),
-        if (widget.isPasswordField!)
+        if (widget.isPasswordField != null && widget.isPasswordField!)
           Positioned(
             right: 10,
             child: GestureDetector(
               onTap: () {
                 setState(() {
-                  widget.hideText = !widget.hideText!;
+                  hideText = !hideText;
                 });
               },
               child: SvgPicture.asset(
-                widget.hideText! ? Assets.icons.eyeOff : Assets.icons.eyeOn,
+                hideText ? Assets.icons.eyeOff : Assets.icons.eyeOn,
               ),
             ),
           )

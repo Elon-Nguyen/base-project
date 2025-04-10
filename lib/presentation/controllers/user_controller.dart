@@ -1,0 +1,37 @@
+import 'dart:developer';
+
+import 'package:base_project/domain/entities/user.dart';
+import 'package:base_project/domain/usercases/get_user_details.dart';
+import 'package:get/get.dart';
+
+class UserController extends GetxController {
+  final GetUserDetails getUserDetails;
+
+  UserController(this.getUserDetails);
+
+  final Rx<User?> _user = Rx<User?>(null);
+  final RxBool _isLoading = false.obs;
+
+  // Getter for user
+  User? get user => _user.value;
+
+  // Getter for isLoading
+  bool get isLoading => _isLoading.value;
+
+  Future<void> fetchUserDetails(String userId) async {
+    _isLoading.value = true;
+
+    try {
+      final result = await getUserDetails.execute(userId);
+
+      result.fold((error) => log('Lỗi: $error'), (userData) {
+        log('User: ${userData.name}');
+        _user.value = userData;
+      });
+    } catch (e) {
+      _user.value = null;
+    } finally {
+      _isLoading.value = false;
+    }
+  }
+}

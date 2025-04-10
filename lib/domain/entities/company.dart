@@ -5,9 +5,6 @@ class Company {
 
   Company({required this.name, required this.catchPhrase, required this.bs});
 
-  factory Company.fromJson(Map<String, dynamic> json) => Company(
-    name: json['name'].toString(),
-    catchPhrase: json['catchPhrase'].toString(),
-    bs: json['bs'].toString(),
-  );
+  factory Company.fromJson(Map<String, dynamic> json) =>
+      Company(name: json['name'].toString(), catchPhrase: json['catchPhrase'].toString(), bs: json['bs'].toString());
 }

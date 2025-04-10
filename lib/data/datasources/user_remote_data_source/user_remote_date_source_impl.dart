@@ -13,9 +13,7 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
   @override
   // Future<UserModel> getUserDetails(String userId) async {
   Future<User> getUserDetails(String userId) async {
-    final response = await client.get(
-      Uri.parse('https://jsonplaceholder.typicode.com/users/1'),
-    );
+    final response = await client.get(Uri.parse('https://jsonplaceholder.typicode.com/users/1'));
 
     if (response.statusCode == 200) {
       final Map<String, dynamic> json = jsonDecode(response.body);

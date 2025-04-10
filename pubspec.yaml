@@ -55,6 +55,11 @@ dev_dependencies:
   # rules and activating additional ones.
   very_good_analysis: ^7.0.0
   mobx_codegen: ^2.7.0
+  husky: ^0.1.7
+  lint_staged: ^0.5.1
+
+lint_staged:
+  'lib/**.dart': dart format -l 120 && dart analyze --fatal-infos --fatal-warnings
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

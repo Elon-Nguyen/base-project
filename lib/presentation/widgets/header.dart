@@ -9,24 +9,12 @@ class Header extends StatelessWidget {
   final String? iconRight;
   final Function? functionLeft;
   final Function? functionRight;
-  const Header({
-    super.key,
-    required this.title,
-    this.iconLeft,
-    this.iconRight,
-    this.functionLeft,
-    this.functionRight,
-  });
+  const Header({super.key, required this.title, this.iconLeft, this.iconRight, this.functionLeft, this.functionRight});
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(
-        top: AppValue.paddingTop(context) + 18,
-        bottom: 18,
-        right: 16,
-        left: 16,
-      ),
+      padding: EdgeInsets.only(top: AppValue.paddingTop(context) + 18, bottom: 18, right: 16, left: 16),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [

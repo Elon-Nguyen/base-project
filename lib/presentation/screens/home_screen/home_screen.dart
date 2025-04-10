@@ -28,10 +28,7 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  Text(
-                    'You have pushed the button this many times:',
-                    style: context.textStyle.size18.w400.black,
-                  ),
+                  Text('You have pushed the button this many times:', style: context.textStyle.size18.w400.black),
                   Text('$_counter', style: context.textStyle.size22.w700.red),
                   TextFormFieldWidget(isPasswordField: true),
                   ButtonWidget(
@@ -51,12 +48,7 @@ class _HomeScreenState extends State<HomeScreen> {
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed:
-            () => CustomSnackBar.show(
-              context: context,
-              message: "aaaaaa",
-              type: SnackBarType.info,
-            ),
+        onPressed: () => CustomSnackBar.show(context: context, message: "aaaaaa", type: SnackBarType.info),
         tooltip: 'Increment',
         child: const Icon(Icons.add),
       ),

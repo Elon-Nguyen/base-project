@@ -4,6 +4,5 @@ class Geo {
 
   Geo({required this.lat, required this.lng});
 
-  factory Geo.fromJson(Map<String, dynamic> json) =>
-      Geo(lat: json['lat'].toString(), lng: json['lng'].toString());
+  factory Geo.fromJson(Map<String, dynamic> json) => Geo(lat: json['lat'].toString(), lng: json['lng'].toString());
 }

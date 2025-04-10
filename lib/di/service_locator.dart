@@ -20,12 +20,8 @@ void initApp() {
   locator.registerLazySingleton(() => GetUserDetails(locator()));
 
   // Repositories
-  locator.registerLazySingleton<UserRepository>(
-    () => UserRepositoryImpl(locator()),
-  );
+  locator.registerLazySingleton<UserRepository>(() => UserRepositoryImpl(locator()));
 
   // Data sources
-  locator.registerLazySingleton<UserRemoteDataSource>(
-    () => UserRemoteDataSourceImpl(),
-  );
+  locator.registerLazySingleton<UserRemoteDataSource>(() => UserRemoteDataSourceImpl());
 }

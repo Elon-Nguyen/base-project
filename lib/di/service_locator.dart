@@ -1,3 +1,5 @@
+import 'package:base_project/core/storage/secure_storage.dart';
+import 'package:base_project/core/storage/secure_storage_impl.dart';
 import 'package:base_project/data/datasources/user_remote_data_source/user_remote_data_source.dart';
 import 'package:base_project/data/datasources/user_remote_data_source/user_remote_date_source_impl.dart';
 import 'package:base_project/data/repositories/user_repository_impl.dart';
@@ -23,6 +25,7 @@ void initApp() {
     // Data sources
     ..registerLazySingleton<UserRemoteDataSource>(UserRemoteDataSourceImpl.new)
     //
-    ..registerLazySingleton(() => LoginController(locator()))
+    ..registerLazySingleton<SecureStorage>(SecureStorageImpl.new)
+    ..registerLazySingleton(() => LoginController(locator(), locator()))
     ..registerLazySingleton(() => LoginWithEmailPassword(locator()));
 }

@@ -36,11 +36,8 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  Text(
-                    'You have pushed the button this many times:',
-                    style: context.textStyle.size18.w400.black,
-                  ),
-                  Text('$_counter', style: context.textStyle.size22.w700.red),
+                  Text('Pushed', style: context.textStyle.size18.w400.black),
+                  Text('$_counter'),
                   TextFormFieldWidget(isPasswordField: true),
                   ButtonWidget(
                     margin: const EdgeInsets.symmetric(

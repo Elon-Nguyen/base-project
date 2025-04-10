@@ -54,7 +54,7 @@ class _ButtonWidgetState extends State<ButtonWidget> {
           child:
               widget.isLoading == false
                   ? Text(
-                    widget.text!,
+                    widget.text ?? '',
                     style:
                         widget.textStyle ?? context.textStyle.size16.w400.white,
                   )

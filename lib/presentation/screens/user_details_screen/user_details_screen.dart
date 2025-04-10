@@ -1,10 +1,10 @@
 import 'package:base_project/di/service_locator.dart';
-import 'package:base_project/presentation/view_models/user_view_model.dart';
+import 'package:base_project/presentation/controllers/user_controller.dart';
 import 'package:flutter/material.dart';
 
 class UserDetailsScreen extends StatelessWidget {
   UserDetailsScreen({super.key});
-  final UserViewModel userVM = locator<UserViewModel>();
+  final UserController userVM = locator<UserController>();
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +20,6 @@ class UserDetailsScreen extends StatelessWidget {
           if (userVM.user == null) {
             return const Center(child: Text('User not found'));
           }
-
           return Padding(
             padding: const EdgeInsets.all(16),
             child: Column(

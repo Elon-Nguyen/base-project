@@ -3,7 +3,8 @@ import 'package:base_project/data/datasources/user_remote_data_source/user_remot
 import 'package:base_project/data/repositories/user_repository_impl.dart';
 import 'package:base_project/domain/repositories/user_repository.dart';
 import 'package:base_project/domain/usercases/get_user_details.dart';
-import 'package:base_project/presentation/stores/user_store.dart';
+import 'package:base_project/presentation/controllers/login_controller.dart';
+import 'package:base_project/presentation/controllers/user_controller.dart';
 import 'package:base_project/presentation/view_models/user_view_model.dart';
 import 'package:get_it/get_it.dart';
 
@@ -12,13 +13,15 @@ final locator = GetIt.instance;
 void initApp() {
   // State manager
   locator
-    ..registerLazySingleton(() => UserStore(locator()))
+    ..registerLazySingleton(() => UserController(locator()))
     // View models
-    ..registerLazySingleton(() => UserViewModel(locator()))
+    ..registerLazySingleton(() => UserViewModel)
     // User cases
     ..registerLazySingleton(() => GetUserDetails(locator()))
     // Repositories
     ..registerLazySingleton<UserRepository>(() => UserRepositoryImpl(locator()))
     // Data sources
-    ..registerLazySingleton<UserRemoteDataSource>(UserRemoteDataSourceImpl.new);
+    ..registerLazySingleton<UserRemoteDataSource>(UserRemoteDataSourceImpl.new)
+    //
+    ..registerLazySingleton(LoginController.new);
 }

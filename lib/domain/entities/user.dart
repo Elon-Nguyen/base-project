@@ -1,5 +1,5 @@
-import './address.dart';
-import './company.dart';
+import 'package:base_project/domain/entities/address.dart';
+import 'package:base_project/domain/entities/company.dart';
 
 class User {
   final int id;

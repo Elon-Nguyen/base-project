@@ -42,9 +42,11 @@ dependencies:
   get: ^4.7.2
 
 dev_dependencies:
+  build_runner: ^2.4.15 #--flutter pub run build_runner build
   flutter_lints: ^5.0.0
   flutter_test:
     sdk: flutter
+  flutter_gen_runner: ^5.10.0
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
@@ -52,8 +54,6 @@ dev_dependencies:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   very_good_analysis: ^7.0.0
-  build_runner: ^2.4.15 #--flutter pub run build_runner build
-  flutter_gen_runner: ^5.10.0 
   mobx_codegen: ^2.7.0
 
 # For information on the generic Dart part of this file, see the

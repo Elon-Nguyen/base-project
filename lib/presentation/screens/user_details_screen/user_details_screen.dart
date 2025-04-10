@@ -3,41 +3,40 @@ import 'package:base_project/presentation/view_models/user_view_model.dart';
 import 'package:flutter/material.dart';
 
 class UserDetailsScreen extends StatelessWidget {
-  final UserViewModel userVM = locator<UserViewModel>();
-
   UserDetailsScreen({super.key});
+  final UserViewModel userVM = locator<UserViewModel>();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("User Details")),
+      appBar: AppBar(title: const Text('User Details')),
       body: FutureBuilder(
-        future: userVM.fetchUserDetails("1"),
+        future: userVM.fetchUserDetails('1'),
         builder: (context, snapshot) {
           if (userVM.isLoading) {
-            return Center(child: CircularProgressIndicator());
+            return const Center(child: CircularProgressIndicator());
           }
 
           if (userVM.user == null) {
-            return Center(child: Text('User not found'));
+            return const Center(child: Text('User not found'));
           }
 
           return Padding(
-            padding: const EdgeInsets.all(16.0),
+            padding: const EdgeInsets.all(16),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   'ID: ${userVM.user?.id ?? ""}',
-                  style: TextStyle(fontSize: 20),
+                  style: const TextStyle(fontSize: 20),
                 ),
                 Text(
                   'Name: ${userVM.user?.name ?? ""}',
-                  style: TextStyle(fontSize: 20),
+                  style: const TextStyle(fontSize: 20),
                 ),
                 Text(
                   'Email: ${userVM.user?.email ?? ""}',
-                  style: TextStyle(fontSize: 20),
+                  style: const TextStyle(fontSize: 20),
                 ),
               ],
             ),

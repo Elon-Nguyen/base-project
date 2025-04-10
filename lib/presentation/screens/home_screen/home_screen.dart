@@ -1,13 +1,13 @@
 import 'package:base_project/presentation/constants/app_text_style.dart';
 import 'package:base_project/presentation/widgets/button_widget.dart';
+import 'package:base_project/presentation/widgets/custom_snack_bar.dart';
 import 'package:base_project/presentation/widgets/header.dart';
 import 'package:base_project/presentation/widgets/loading.dart';
 import 'package:base_project/presentation/widgets/textfield_widget.dart';
-import 'package:base_project/presentation/widgets/custom_snack_bar.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key, required this.title});
+  const HomeScreen({required this.title, super.key});
   final String title;
 
   @override
@@ -28,16 +28,16 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  Text('You have pushed the button this many times:', style: context.textStyle.size18.w400.black),
-                  Text('$_counter', style: context.textStyle.size22.w700.red),
+                  Text('Pushed', style: context.textStyle.size18.w400.black),
+                  Text('$_counter'),
                   TextFormFieldWidget(isPasswordField: true),
                   ButtonWidget(
-                    margin: EdgeInsets.symmetric(vertical: 20, horizontal: 50),
-                    text: "Button 1",
+                    margin: const EdgeInsets.symmetric(vertical: 20, horizontal: 50),
+                    text: 'Button 1',
                     onTap: () {
                       Loading.show(context);
-                      Future.delayed(Duration(seconds: 3), () {
-                        Loading.hide(context);
+                      Future.delayed(const Duration(seconds: 3), () {
+                        // Loading.hide(context);
                       });
                     },
                   ),
@@ -48,7 +48,12 @@ class _HomeScreenState extends State<HomeScreen> {
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => CustomSnackBar.show(context: context, message: "aaaaaa", type: SnackBarType.info),
+        onPressed:
+            () => CustomSnackBar.show(
+              context: context,
+              message: 'aaaaaa',
+              // type: SnackBarType.info,
+            ),
         tooltip: 'Increment',
         child: const Icon(Icons.add),
       ),

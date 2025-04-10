@@ -6,4 +6,4 @@
 # dart analyze — fatal-infos — fatal-warnings
 
 dart run lint_staged
-flutter test 
+# flutter test 

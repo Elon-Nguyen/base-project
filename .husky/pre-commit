@@ -2,7 +2,7 @@
 . "$(dirname -- "$0")/_/husky.sh"
 
 # flutter test
-# dart format . -l 120 — set-exit-if-changed
+# dart format . -l 80 — set-exit-if-changed
 # dart analyze — fatal-infos — fatal-warnings
 
 dart run lint_staged

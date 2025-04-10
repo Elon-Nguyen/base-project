@@ -61,7 +61,7 @@ dev_dependencies:
   lint_staged: ^0.5.1
 
 lint_staged:
-  'lib/**.dart': flutter test && dart format -l 80 —-set-exit-if-changed && dart analyze --fatal-infos --fatal-warnings
+  'lib/**.dart': flutter test && dart format . -l 80 — set-exit-if-changed && dart analyze --fatal-infos --fatal-warnings
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

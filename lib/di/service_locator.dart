@@ -3,6 +3,7 @@ import 'package:base_project/data/datasources/user_remote_data_source/user_remot
 import 'package:base_project/data/repositories/user_repository_impl.dart';
 import 'package:base_project/domain/repositories/user_repository.dart';
 import 'package:base_project/domain/usercases/get_user_details.dart';
+import 'package:base_project/domain/usercases/login_with_email_password.dart';
 import 'package:base_project/presentation/controllers/login_controller.dart';
 import 'package:base_project/presentation/controllers/user_controller.dart';
 import 'package:base_project/presentation/view_models/user_view_model.dart';
@@ -22,5 +23,6 @@ void initApp() {
     // Data sources
     ..registerLazySingleton<UserRemoteDataSource>(UserRemoteDataSourceImpl.new)
     //
-    ..registerLazySingleton(LoginController.new);
+    ..registerLazySingleton(() => LoginController(locator()))
+    ..registerLazySingleton(() => LoginWithEmailPassword(locator()));
 }

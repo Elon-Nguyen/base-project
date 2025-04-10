@@ -1,24 +1,22 @@
 import 'dart:convert';
 import 'package:base_project/core/errors/server_not_found.dart';
+import 'package:base_project/data/datasources/user_remote_data_source/user_remote_data_source.dart';
 import 'package:base_project/domain/entities/user.dart';
-import 'package:http/http.dart' as http;
-
-import 'user_remote_data_source.dart';
+import 'package:dio/dio.dart';
 
 class UserRemoteDataSourceImpl implements UserRemoteDataSource {
-  final http.Client client = http.Client();
-
   UserRemoteDataSourceImpl();
-
+  final dio = Dio();
   @override
   // Future<UserModel> getUserDetails(String userId) async {
   Future<User> getUserDetails(String userId) async {
-    final response = await client.get(
-      Uri.parse('https://jsonplaceholder.typicode.com/users/1'),
+    final response = await dio.get<Map<String, dynamic>>(
+      'https://jsonplaceholder.typicode.com/users/1',
     );
 
     if (response.statusCode == 200) {
-      final Map<String, dynamic> json = jsonDecode(response.body);
+      final Map<String, dynamic> json =
+          jsonDecode(response.data! as String) as Map<String, dynamic>;
       final user = User.fromJson(json);
       return user;
     } else {

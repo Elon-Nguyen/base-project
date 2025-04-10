@@ -1,13 +1,15 @@
+import 'dart:developer';
+
 import 'package:base_project/presentation/constants/app_text_style.dart';
+import 'package:base_project/presentation/gen/assets.gen.dart';
 import 'package:base_project/presentation/widgets/button_widget.dart';
-import 'package:base_project/presentation/widgets/header.dart';
-import 'package:base_project/presentation/widgets/loading.dart';
-import 'package:base_project/presentation/widgets/textfield_widget.dart';
 import 'package:base_project/presentation/widgets/custom_snack_bar.dart';
+import 'package:base_project/presentation/widgets/header.dart';
+import 'package:base_project/presentation/widgets/textfield_widget.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key, required this.title});
+  const HomeScreen({required this.title, super.key});
   final String title;
 
   @override
@@ -22,7 +24,13 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       body: Column(
         children: [
-          Header(title: widget.title),
+          Header(
+            title: widget.title,
+            iconLeft: Assets.icons.iconX,
+            functionLeft: () {
+              log('object');
+            },
+          ),
           Expanded(
             child: Center(
               child: Column(
@@ -35,13 +43,16 @@ class _HomeScreenState extends State<HomeScreen> {
                   Text('$_counter', style: context.textStyle.size22.w700.red),
                   TextFormFieldWidget(isPasswordField: true),
                   ButtonWidget(
-                    margin: EdgeInsets.symmetric(vertical: 20, horizontal: 50),
-                    text: "Button 1",
+                    margin: const EdgeInsets.symmetric(
+                      vertical: 20,
+                      horizontal: 50,
+                    ),
+                    text: 'Button 1',
                     onTap: () {
-                      Loading.show(context);
-                      Future.delayed(Duration(seconds: 3), () {
-                        Loading.hide(context);
-                      });
+                      // Loading.show(context);
+                      // Future.delayed(const Duration(seconds: 3), () {
+                      //   Loading.hide(context);
+                      // });
                     },
                   ),
                 ],
@@ -54,8 +65,8 @@ class _HomeScreenState extends State<HomeScreen> {
         onPressed:
             () => CustomSnackBar.show(
               context: context,
-              message: "aaaaaa",
-              type: SnackBarType.info,
+              message: 'aaaaaa',
+              type: SnackBarType.error,
             ),
         tooltip: 'Increment',
         child: const Icon(Icons.add),

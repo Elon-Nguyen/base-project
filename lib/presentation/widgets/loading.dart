@@ -23,7 +23,7 @@ class Loading {
       height: double.infinity,
       width: double.infinity,
       alignment: Alignment.center,
-      child: SizedBox(
+      child: const SizedBox(
         height: 150,
         width: 150,
         child: Center(child: CircularProgressIndicator()),

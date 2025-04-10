@@ -1,20 +1,19 @@
 import 'package:base_project/presentation/constants/app_text_style.dart';
+import 'package:base_project/presentation/constants/colors.dart';
+import 'package:base_project/presentation/constants/values.dart';
 import 'package:flutter/material.dart';
-
-import '../../constants/colors.dart';
-import '../../constants/values.dart';
 
 class DialogConfirm extends StatelessWidget {
   final String? header;
   final String title;
   final String? textLeft;
   final String? textRight;
-  final Function? functionLeft;
-  final Function? functionRight;
+  final void Function()? functionLeft;
+  final void Function()? functionRight;
 
   const DialogConfirm({
-    super.key,
     required this.title,
+    super.key,
     this.textLeft,
     this.textRight,
     this.functionLeft,
@@ -71,7 +70,7 @@ class DialogConfirm extends StatelessWidget {
                       ),
                       child: Center(
                         child: Text(
-                          textLeft ?? "Cancel",
+                          textLeft ?? 'Cancel',
                           style: context.textStyle.size12.w500.black,
                         ),
                       ),
@@ -90,7 +89,7 @@ class DialogConfirm extends StatelessWidget {
                       ),
                       child: Center(
                         child: Text(
-                          textRight ?? "OK",
+                          textRight ?? 'OK',
                           style: context.textStyle.size12.w500.blue2,
                         ),
                       ),

@@ -1,4 +1,4 @@
-import 'package:base_project/di/service_locator.dart';
+import 'package:base_project/core/di/service_locator.dart';
 import 'package:base_project/domain/usercases/login_with_email_password.dart';
 import 'package:base_project/domain/usercases/save_tokens.dart';
 import 'package:base_project/presentation/screens/login_screen/login_controller.dart';

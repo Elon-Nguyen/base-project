@@ -14,59 +14,143 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.blueGrey,
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 30),
+      body: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [Colors.blue.shade800, Colors.blueGrey.shade900],
+          ),
+        ),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            AppValue.vSpace(AppValue.paddingTop(context)),
-            Text('Login Page', style: context.textStyle.size28.w600.blueIndigo),
-            AppValue.vSpaceMedium,
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text('Username', style: context.textStyle.size14.black),
-                AppValue.vSpaceTiny,
-                Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: TextFormFieldWidget(
-                    controller: loginController.userNameEditController,
-                    border: InputBorder.none,
-                  ),
+            SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 30),
+                child: Column(
+                  children: [
+                    AppValue.vSpace(AppValue.paddingTop(context)),
+                    AppValue.vSpaceSmall,
+                    const Icon(
+                      Icons.lock_outline,
+                      size: 80,
+                      color: Colors.white,
+                    ),
+                    AppValue.vSpaceMedium,
+                    Text(
+                      'Welcome Back',
+                      style: context.textStyle.size28.w600.copyWith(
+                        color: Colors.white,
+                        letterSpacing: 1.2,
+                      ),
+                    ),
+                    AppValue.vSpaceSmall,
+                    Text(
+                      'Sign in to continue',
+                      style: context.textStyle.size16.copyWith(
+                        color: Colors.white70,
+                      ),
+                    ),
+                    AppValue.vSpaceLarge,
+                    Container(
+                      padding: const EdgeInsets.all(20),
+                      decoration: BoxDecoration(
+                        color: Colors.white.withOpacity(0.1),
+                        borderRadius: BorderRadius.circular(20),
+                        border: Border.all(color: Colors.white24, width: 1),
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Username',
+                            style: context.textStyle.size14.copyWith(
+                              color: Colors.white,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                          AppValue.vSpaceTiny,
+                          Container(
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(12),
+                              boxShadow: const [
+                                BoxShadow(
+                                  color: Colors.black12,
+                                  blurRadius: 10,
+                                  offset: Offset(0, 5),
+                                ),
+                              ],
+                            ),
+                            child: TextFormFieldWidget(
+                              controller:
+                                  loginController.userNameEditController,
+                              border: InputBorder.none,
+                            ),
+                          ),
+                          AppValue.vSpaceSmall,
+                          Text(
+                            'Password',
+                            style: context.textStyle.size14.copyWith(
+                              color: Colors.white,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                          AppValue.vSpaceTiny,
+                          Container(
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(12),
+                              boxShadow: const [
+                                BoxShadow(
+                                  color: Colors.black12,
+                                  blurRadius: 10,
+                                  offset: Offset(0, 5),
+                                ),
+                              ],
+                            ),
+                            child: TextFormFieldWidget(
+                              controller:
+                                  loginController.passwordEditController,
+                              border: InputBorder.none,
+                              isPasswordField: true,
+                            ),
+                          ),
+                          AppValue.vSpaceSmall,
+                          Obx(
+                            () => Text(
+                              loginController.erroText.value,
+                              style: context.textStyle.size12.w400.red,
+                            ),
+                          ),
+                          AppValue.vSpaceMedium,
+                          SizedBox(
+                            height: 55,
+                            child: ButtonWidget(
+                              onTap: loginController.onClickLogin,
+                              text: 'Sign In',
+                              primaryColor: Colors.blueAccent,
+                              textStyle: context.textStyle.size16.w600.copyWith(
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    AppValue.vSpaceMedium,
+                    TextButton(
+                      onPressed: () {},
+                      child: Text(
+                        'Forgot Password?',
+                        style: context.textStyle.size14.copyWith(
+                          color: Colors.white70,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
-                AppValue.vSpaceSmall,
-                Text('Password', style: context.textStyle.size14),
-                AppValue.vSpaceTiny,
-                Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: TextFormFieldWidget(
-                    controller: loginController.passwordEditController,
-                    border: InputBorder.none,
-                    isPasswordField: true,
-                  ),
-                ),
-                AppValue.vSpaceSmall,
-                Obx(
-                  () => Text(
-                    loginController.erroText.value,
-                    style: context.textStyle.size12.w400.red,
-                  ),
-                ),
-                AppValue.vSpaceSmall,
-                SizedBox(
-                  height: 50,
-                  child: ButtonWidget(
-                    onTap: loginController.onClickLogin,
-                    text: 'Login',
-                    primaryColor: Colors.blueAccent,
-                  ),
-                ),
-              ],
+              ),
             ),
           ],
         ),

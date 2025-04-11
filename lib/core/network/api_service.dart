@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:developer';
 
 import 'package:base_project/core/errors/bad_response.dart';
@@ -7,6 +8,17 @@ import 'package:base_project/core/errors/server_timeout.dart';
 import 'package:base_project/core/errors/unknown_exception.dart';
 import 'package:base_project/presentation/constants/app_url.dart';
 import 'package:dio/dio.dart';
+
+// Token model to handle both access and refresh tokens
+class TokenPair {
+  final String accessToken;
+  final String refreshToken;
+
+  TokenPair({required this.accessToken, required this.refreshToken});
+}
+
+// Token refresh callback type
+typedef RefreshTokenCallback = Future<TokenPair> Function();
 
 class ApiService {
   // Singleton instance
@@ -33,9 +45,22 @@ class ApiService {
   // Dio instance
   late final Dio _dio;
 
-  // Add an auth interceptor
-  void addAuthInterceptor(String Function() getToken) {
-    _dio.interceptors.add(AuthInterceptor(getToken));
+  // Add an auth interceptor with refresh capability
+  void addAuthInterceptor({
+    required String Function() getAccessToken,
+    required String Function() getRefreshToken,
+    required RefreshTokenCallback onRefreshToken,
+    required Future<void> Function(TokenPair) onTokenRefreshed,
+  }) {
+    _dio.interceptors.add(
+      AuthInterceptor(
+        getAccessToken: getAccessToken,
+        getRefreshToken: getRefreshToken,
+        onRefreshToken: onRefreshToken,
+        onTokenRefreshed: onTokenRefreshed,
+        dio: _dio,
+      ),
+    );
   }
 
   // Generic GET method
@@ -225,16 +250,99 @@ class LoggingInterceptor extends Interceptor {
 }
 
 class AuthInterceptor extends Interceptor {
-  final String Function() getToken;
+  final String Function() getAccessToken;
+  final String Function() getRefreshToken;
+  final RefreshTokenCallback onRefreshToken;
+  final Future<void> Function(TokenPair) onTokenRefreshed;
+  final Dio dio;
+  bool _isRefreshing = false;
+  final _pendingRequests = <RequestOptions>[];
 
-  AuthInterceptor(this.getToken);
+  AuthInterceptor({
+    required this.getAccessToken,
+    required this.getRefreshToken,
+    required this.onRefreshToken,
+    required this.onTokenRefreshed,
+    required this.dio,
+  });
 
   @override
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
-    final token = getToken();
+    final token = getAccessToken();
     if (token.isNotEmpty) {
       options.headers['Authorization'] = 'Bearer $token';
     }
     return super.onRequest(options, handler);
+  }
+
+  @override
+  Future<void> onError(
+    DioException err,
+    ErrorInterceptorHandler handler,
+  ) async {
+    if (err.response?.statusCode == 401) {
+      final newTokens = await _refreshToken(err.requestOptions);
+      if (newTokens != null) {
+        // Retry the failed request with the new token
+        final retryResponse = await _retryRequest(
+          err.requestOptions,
+          newTokens.accessToken,
+        );
+        return handler.resolve(retryResponse);
+      }
+    }
+    return super.onError(err, handler);
+  }
+
+  Future<TokenPair?> _refreshToken(RequestOptions failedRequest) async {
+    if (!_isRefreshing) {
+      _isRefreshing = true;
+      try {
+        final newTokens = await onRefreshToken();
+        await onTokenRefreshed(newTokens);
+
+        // Retry all pending requests
+        for (final request in _pendingRequests) {
+          final response = await _retryRequest(request, newTokens.accessToken);
+          request.extra['completer']?.complete(response);
+        }
+        _pendingRequests.clear();
+        _isRefreshing = false;
+        return newTokens;
+      } catch (e) {
+        _isRefreshing = false;
+        _pendingRequests.clear();
+        log('Token refresh failed: $e');
+        return null;
+      }
+    } else {
+      // Wait for the ongoing refresh to complete
+      final completer = Completer<Response>();
+      failedRequest.extra['completer'] = completer;
+      _pendingRequests.add(failedRequest);
+      try {
+        final response = await completer.future;
+        return null; // Request has been handled by the ongoing refresh
+      } catch (e) {
+        return null;
+      }
+    }
+  }
+
+  Future<Response<dynamic>> _retryRequest(
+    RequestOptions requestOptions,
+    String newToken,
+  ) async {
+    final options = Options(
+      method: requestOptions.method,
+      headers: {...requestOptions.headers, 'Authorization': 'Bearer $newToken'},
+    );
+
+    return dio.request<dynamic>(
+      requestOptions.path,
+      data: requestOptions.data,
+      queryParameters: requestOptions.queryParameters,
+      options: options,
+    );
   }
 }

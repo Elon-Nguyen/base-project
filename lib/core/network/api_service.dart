@@ -9,13 +9,15 @@ import 'package:base_project/presentation/constants/app_url.dart';
 import 'package:dio/dio.dart';
 
 class ApiService {
-  final Dio _dio;
+  // Singleton instance
+  static final ApiService _instance = ApiService._internal();
 
-  ApiService(this._dio);
+  // Factory constructor to return the singleton instance
+  factory ApiService() => _instance;
 
-  // Factory constructor to create ApiService with default settings
-  factory ApiService.create() {
-    final dio = Dio(
+  // Private constructor for internal use
+  ApiService._internal() {
+    _dio = Dio(
       BaseOptions(
         baseUrl: AppUrl.url,
         connectTimeout: const Duration(seconds: 5),
@@ -25,8 +27,15 @@ class ApiService {
           'Accept': 'application/json',
         },
       ),
-    );
-    return ApiService(dio);
+    )..interceptors.add(LoggingInterceptor());
+  }
+
+  // Dio instance
+  late final Dio _dio;
+
+  // Add an auth interceptor
+  void addAuthInterceptor(String Function() getToken) {
+    _dio.interceptors.add(AuthInterceptor(getToken));
   }
 
   // Generic GET method
@@ -77,7 +86,7 @@ class ApiService {
     }
   }
 
-  // Similarly, implement PUT, DELETE, PATCH etc.
+  // PUT method
   Future<T> put<T>(
     String endpoint, {
     dynamic data,
@@ -102,6 +111,7 @@ class ApiService {
     }
   }
 
+  // DELETE method
   Future<T> delete<T>(
     String endpoint, {
     dynamic data,
@@ -151,13 +161,15 @@ class ApiService {
   }
 }
 
-// interceptors.dart
+// LoggingInterceptor
 class LoggingInterceptor extends Interceptor {
   @override
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
+    log('=======================================');
     log('REQUEST[${options.method}] => PATH: ${options.path}');
     log('PARAMS: ${options.queryParameters}');
     log('BODY: ${options.data}');
+    log('=======================================');
     return super.onRequest(options, handler);
   }
 
@@ -166,18 +178,23 @@ class LoggingInterceptor extends Interceptor {
     Response<dynamic> response,
     ResponseInterceptorHandler handler,
   ) {
-    log('''
-RESPONSE[${response.statusCode}] => PATH: ${response.requestOptions.path}''');
+    log('=======================================');
+    log(
+      '''RESPONSE[${response.statusCode}] => PATH: ${response.requestOptions.path}''',
+    );
     log('DATA: ${response.data}');
+    log('=======================================');
     return super.onResponse(response, handler);
   }
 
   @override
   void onError(DioException err, ErrorInterceptorHandler handler) {
+    log('=======================================');
     log(
       'ERROR[${err.response?.statusCode}] => PATH: ${err.requestOptions.path}',
     );
     log('MESSAGE: ${err.message}');
+    log('=======================================');
     return super.onError(err, handler);
   }
 }

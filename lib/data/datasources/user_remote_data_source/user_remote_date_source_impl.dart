@@ -1,7 +1,6 @@
 import 'package:base_project/core/network/api_service.dart';
 import 'package:base_project/data/datasources/user_remote_data_source/user_remote_data_source.dart';
 import 'package:base_project/domain/entities/user.dart';
-import 'package:base_project/presentation/widgets/loading.dart';
 
 class UserRemoteDataSourceImpl implements UserRemoteDataSource {
   final ApiService apiService = ApiService();
@@ -17,7 +16,6 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
 
   @override
   Future<User> login(String email, String password) async {
-    Loading.show();
     await Future<void>.delayed(const Duration(seconds: 1));
 
     const fakeJson = {
@@ -40,7 +38,6 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
         'bs': 'harness real-time e-markets',
       },
     };
-    Loading.hide();
     return User.fromJson(fakeJson);
   }
 }

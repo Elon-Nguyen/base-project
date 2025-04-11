@@ -4,6 +4,7 @@ import 'package:base_project/domain/usercases/login_with_email_password.dart';
 import 'package:base_project/domain/usercases/save_tokens.dart';
 import 'package:base_project/presentation/constants/router_name.dart';
 import 'package:base_project/presentation/screens/user_details_screen/user_details_screen.dart';
+import 'package:base_project/presentation/widgets/loading.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 
@@ -31,10 +32,13 @@ class LoginController extends GetxController {
       return;
     }
 
+    Loading.show();
     final result = await loginWithEmailPassword.execute(
       userNameEditController.text.trim(),
       passwordEditController.text.trim(),
     );
+
+    Loading.hide();
 
     result.fold((error) => log('Lỗi: $error'), (data) async {
       await saveTokens.execute('accessToken', 'refreshtoken');

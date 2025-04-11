@@ -136,6 +136,31 @@ class ApiService {
     }
   }
 
+  // PATCH method
+  Future<T> patch<T>(
+    String endpoint, {
+    dynamic data,
+    Map<String, dynamic>? queryParameters,
+    Options? options,
+    T Function(dynamic)? converter,
+  }) async {
+    try {
+      final response = await _dio.patch(
+        endpoint,
+        data: data,
+        queryParameters: queryParameters,
+        options: options,
+      );
+
+      if (converter != null) {
+        return converter(response.data);
+      }
+      return response.data as T;
+    } catch (e) {
+      throw _handleError(e);
+    }
+  }
+
   // Error handling
   Exception _handleError(dynamic error) {
     if (error is DioException) {

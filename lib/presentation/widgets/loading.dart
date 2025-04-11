@@ -1,21 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class Loading {
   const Loading._();
-  static void show(BuildContext context) {
-    showDialog<void>(
-      context: context,
-      builder: (BuildContext context) {
-        return WillPopScope(
-          onWillPop: () => Future.value(false),
-          child: showLoading(),
-        );
-      },
+  static void show() {
+    Get.dialog(
+      WillPopScope(onWillPop: () => Future.value(false), child: showLoading()),
     );
   }
 
-  static void hide(BuildContext context) {
-    Navigator.pop(context);
+  static void hide() {
+    Get.back();
   }
 
   static Container showLoading() {

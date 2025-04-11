@@ -1,4 +1,4 @@
-import 'package:base_project/core/storage/secure_storage.dart';
+import 'package:base_project/data/datasources/secure_data_source/secure_storage.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class SecureStorageImpl implements SecureStorage {

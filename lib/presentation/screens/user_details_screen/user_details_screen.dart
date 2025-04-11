@@ -1,4 +1,4 @@
-import 'package:base_project/di/service_locator.dart';
+import 'package:base_project/core/di/service_locator.dart';
 import 'package:base_project/presentation/screens/user_details_screen/user_controller.dart';
 import 'package:flutter/material.dart';
 

@@ -304,7 +304,9 @@ class AuthInterceptor extends Interceptor {
         // Retry all pending requests
         for (final request in _pendingRequests) {
           final response = await _retryRequest(request, newTokens.accessToken);
-          request.extra['completer']?.complete(response);
+          (request.extra['completer'] as Completer<Response>?)?.complete(
+            response,
+          );
         }
         _pendingRequests.clear();
         _isRefreshing = false;
@@ -317,11 +319,11 @@ class AuthInterceptor extends Interceptor {
       }
     } else {
       // Wait for the ongoing refresh to complete
-      final completer = Completer<Response>();
+      final completer = Completer<Response<dynamic>>();
       failedRequest.extra['completer'] = completer;
       _pendingRequests.add(failedRequest);
       try {
-        final response = await completer.future;
+        final _ = await completer.future;
         return null; // Request has been handled by the ongoing refresh
       } catch (e) {
         return null;

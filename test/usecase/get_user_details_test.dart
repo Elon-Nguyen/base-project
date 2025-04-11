@@ -1,5 +1,6 @@
 import 'package:base_project/core/errors/failure.dart';
 import 'package:base_project/core/errors/server_failure.dart';
+import 'package:base_project/core/network/api_service.dart';
 import 'package:base_project/domain/entities/user.dart';
 import 'package:base_project/domain/repositories/user_repository.dart';
 import 'package:base_project/domain/usercases/get_user_details.dart';

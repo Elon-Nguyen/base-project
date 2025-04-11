@@ -1,5 +1,7 @@
+import 'package:base_project/core/storage/secure_storage.dart';
 import 'package:base_project/di/service_locator.dart';
-import 'package:base_project/presentation/controllers/login_controller.dart';
+import 'package:base_project/domain/usercases/login_with_email_password.dart';
+import 'package:base_project/presentation/screens/login_screen/login_controller.dart';
 import 'package:base_project/presentation/screens/login_screen/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -18,7 +20,7 @@ class MockLoginController extends GetxController implements LoginController {
   final erroText = ''.obs;
 
   @override
-  void onClickLogin() {}
+  Future<void> onClickLogin() async {}
 
   @override
   set erroText(RxString erroText) {}
@@ -27,6 +29,13 @@ class MockLoginController extends GetxController implements LoginController {
   String validateLogin() {
     throw UnimplementedError();
   }
+
+  @override
+  LoginWithEmailPassword get loginWithEmailPassword =>
+      throw UnimplementedError();
+
+  @override
+  SecureStorage get secureStorage => throw UnimplementedError();
 }
 
 void main() {
@@ -44,25 +53,32 @@ void main() {
   });
 
   group('LoginScreen Widget Tests', () {
-    testWidgets('Should show input fields', (tester) async {
+    testWidgets('LoginScreen Widget should contain interface elements', (
+      tester,
+    ) async {
       await tester.pumpWidget(GetMaterialApp(home: LoginScreen()));
 
+      expect(find.text('Login'), findsOneWidget);
       expect(find.text('Username'), findsOneWidget);
       expect(find.text('Password'), findsOneWidget);
-      expect(find.text('Login'), findsOneWidget);
     });
 
-    testWidgets('Should input able', (tester) async {
-      await tester.pumpWidget(GetMaterialApp(home: LoginScreen()));
+    testWidgets(
+      'LoginScreen Widget should have email field and password field',
+      (tester) async {
+        await tester.pumpWidget(GetMaterialApp(home: LoginScreen()));
 
-      await tester.enterText(find.byType(TextFormField).at(0), 'admin');
-      await tester.enterText(find.byType(TextFormField).at(1), '123456');
+        await tester.enterText(find.byType(TextFormField).at(0), 'admin');
+        await tester.enterText(find.byType(TextFormField).at(1), '123456');
 
-      expect(mockController.userNameEditController.text, 'admin');
-      expect(mockController.passwordEditController.text, '123456');
-    });
+        expect(mockController.userNameEditController.text, 'admin');
+        expect(mockController.passwordEditController.text, '123456');
+      },
+    );
 
-    testWidgets('Should button pressed', (tester) async {
+    testWidgets("LoginScreen Widget's login button should be clickable", (
+      tester,
+    ) async {
       await tester.pumpWidget(GetMaterialApp(home: LoginScreen()));
 
       final buttonFinder = find.text('Login');

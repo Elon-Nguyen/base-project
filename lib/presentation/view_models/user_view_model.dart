@@ -1,5 +1,5 @@
 import 'package:base_project/domain/entities/user.dart';
-import 'package:base_project/presentation/controllers/user_controller.dart';
+import 'package:base_project/presentation/screens/user_details_screen/user_controller.dart';
 import 'package:get/get.dart';
 
 class UserViewModel {

@@ -1,8 +1,16 @@
+import 'dart:developer';
+
 import 'package:base_project/app.dart';
 import 'package:base_project/di/service_locator.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
-void main() {
+Future<void> main() async {
+  const environment = String.fromEnvironment('ENV', defaultValue: 'dev');
+  await dotenv.load(fileName: '.env.$environment');
+
+  log('ENVssss: $environment');
+
   initApp();
 
   runApp(const App());

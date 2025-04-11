@@ -1,5 +1,8 @@
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+
 class AppUrl {
-  static const String url = 'https://jsonplaceholder.typicode.com/';
+  static String url =
+      dotenv.env['BASE_URL'] ?? 'https://jsonplaceholder.typicode.com';
 
   static const String version = '';
 

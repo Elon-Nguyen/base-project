@@ -16,7 +16,7 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
 
   @override
   Future<User> login(String email, String password) async {
-    await Future<void>.delayed(const Duration(seconds: 2));
+    await Future<void>.delayed(const Duration(seconds: 1));
 
     const fakeJson = {
       'id': 1,
@@ -38,7 +38,6 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
         'bs': 'harness real-time e-markets',
       },
     };
-
     return User.fromJson(fakeJson);
   }
 }

@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:developer';
 
 import 'package:base_project/core/errors/bad_response.dart';
@@ -5,8 +6,20 @@ import 'package:base_project/core/errors/network_exception.dart';
 import 'package:base_project/core/errors/request_cancelled.dart';
 import 'package:base_project/core/errors/server_timeout.dart';
 import 'package:base_project/core/errors/unknown_exception.dart';
+import 'package:base_project/data/datasources/secure_data_source/secure_storage_impl.dart';
 import 'package:base_project/presentation/constants/app_url.dart';
 import 'package:dio/dio.dart';
+
+// Token model to handle both access and refresh tokens
+class TokenPair {
+  final String accessToken;
+  final String refreshToken;
+
+  TokenPair({required this.accessToken, required this.refreshToken});
+}
+
+// Token refresh callback type
+typedef RefreshTokenCallback = Future<TokenPair> Function();
 
 class ApiService {
   // Singleton instance
@@ -33,9 +46,9 @@ class ApiService {
   // Dio instance
   late final Dio _dio;
 
-  // Add an auth interceptor
-  void addAuthInterceptor(String Function() getToken) {
-    _dio.interceptors.add(AuthInterceptor(getToken));
+  // Add an auth interceptor with refresh capability
+  void addAuthInterceptor() {
+    _dio.interceptors.add(AuthInterceptor(dio: _dio));
   }
 
   // Generic GET method
@@ -136,6 +149,31 @@ class ApiService {
     }
   }
 
+  // PATCH method
+  Future<T> patch<T>(
+    String endpoint, {
+    dynamic data,
+    Map<String, dynamic>? queryParameters,
+    Options? options,
+    T Function(dynamic)? converter,
+  }) async {
+    try {
+      final response = await _dio.patch(
+        endpoint,
+        data: data,
+        queryParameters: queryParameters,
+        options: options,
+      );
+
+      if (converter != null) {
+        return converter(response.data);
+      }
+      return response.data as T;
+    } catch (e) {
+      throw _handleError(e);
+    }
+  }
+
   // Error handling
   Exception _handleError(dynamic error) {
     if (error is DioException) {
@@ -199,17 +237,110 @@ class LoggingInterceptor extends Interceptor {
   }
 }
 
-class AuthInterceptor extends Interceptor {
-  final String Function() getToken;
+final SecureStorageImpl secureStorageImpl = SecureStorageImpl();
 
-  AuthInterceptor(this.getToken);
+class AuthInterceptor extends Interceptor {
+  final Dio dio;
+  bool _isRefreshing = false;
+  final _pendingRequests = <RequestOptions>[];
+
+  AuthInterceptor({required this.dio});
 
   @override
-  void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
-    final token = getToken();
-    if (token.isNotEmpty) {
+  Future<void> onRequest(
+    RequestOptions options,
+    RequestInterceptorHandler handler,
+  ) async {
+    final token = await secureStorageImpl.readAccessToken();
+    if (token != null && token.isNotEmpty) {
       options.headers['Authorization'] = 'Bearer $token';
     }
     return super.onRequest(options, handler);
+  }
+
+  @override
+  Future<void> onError(
+    DioException err,
+    ErrorInterceptorHandler handler,
+  ) async {
+    if (err.response?.statusCode == 401) {
+      final newTokens = await _refreshToken(err.requestOptions);
+      if (newTokens != null) {
+        // Retry the failed request with the new token
+        final retryResponse = await _retryRequest(
+          err.requestOptions,
+          newTokens.accessToken,
+        );
+        return handler.resolve(retryResponse);
+      }
+    }
+    return super.onError(err, handler);
+  }
+
+  Future<TokenPair?> _refreshToken(RequestOptions failedRequest) async {
+    if (!_isRefreshing) {
+      _isRefreshing = true;
+      try {
+        final String? oldRefreshToken =
+            await secureStorageImpl.readRefreshToken();
+
+        if (oldRefreshToken != null) {
+          //Logic get token and refresh token new
+        }
+
+        final TokenPair newTokens = TokenPair(
+          accessToken: 'new access token',
+          refreshToken: 'new refresh token',
+        );
+
+        //Save new token and refresh token
+        await secureStorageImpl.writeAccessToken(newTokens.accessToken);
+        await secureStorageImpl.writeRefreshToken(newTokens.refreshToken);
+
+        // Retry all pending requests
+        for (final request in _pendingRequests) {
+          final response = await _retryRequest(request, newTokens.accessToken);
+          (request.extra['completer'] as Completer<Response>?)?.complete(
+            response,
+          );
+        }
+        _pendingRequests.clear();
+        _isRefreshing = false;
+        return newTokens;
+      } catch (e) {
+        _isRefreshing = false;
+        _pendingRequests.clear();
+        log('Token refresh failed: $e');
+        return null;
+      }
+    } else {
+      // Wait for the ongoing refresh to complete
+      final completer = Completer<Response<dynamic>>();
+      failedRequest.extra['completer'] = completer;
+      _pendingRequests.add(failedRequest);
+      try {
+        final _ = await completer.future;
+        return null; // Request has been handled by the ongoing refresh
+      } catch (e) {
+        return null;
+      }
+    }
+  }
+
+  Future<Response<dynamic>> _retryRequest(
+    RequestOptions requestOptions,
+    String newToken,
+  ) async {
+    final options = Options(
+      method: requestOptions.method,
+      headers: {...requestOptions.headers, 'Authorization': 'Bearer $newToken'},
+    );
+
+    return dio.request<dynamic>(
+      requestOptions.path,
+      data: requestOptions.data,
+      queryParameters: requestOptions.queryParameters,
+      options: options,
+    );
   }
 }

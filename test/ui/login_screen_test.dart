@@ -58,7 +58,7 @@ void main() {
     ) async {
       await tester.pumpWidget(GetMaterialApp(home: LoginScreen()));
 
-      expect(find.text('Login'), findsOneWidget);
+      expect(find.text('Sign In'), findsOneWidget);
       expect(find.text('Username'), findsOneWidget);
       expect(find.text('Password'), findsOneWidget);
     });
@@ -81,7 +81,7 @@ void main() {
     ) async {
       await tester.pumpWidget(GetMaterialApp(home: LoginScreen()));
 
-      final buttonFinder = find.text('Login');
+      final buttonFinder = find.text('Sign In');
       expect(buttonFinder, findsOneWidget);
 
       await tester.tap(buttonFinder);

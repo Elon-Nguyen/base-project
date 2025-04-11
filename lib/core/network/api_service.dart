@@ -6,6 +6,7 @@ import 'package:base_project/core/errors/network_exception.dart';
 import 'package:base_project/core/errors/request_cancelled.dart';
 import 'package:base_project/core/errors/server_timeout.dart';
 import 'package:base_project/core/errors/unknown_exception.dart';
+import 'package:base_project/data/datasources/secure_data_source/secure_storage_impl.dart';
 import 'package:base_project/presentation/constants/app_url.dart';
 import 'package:dio/dio.dart';
 
@@ -46,21 +47,8 @@ class ApiService {
   late final Dio _dio;
 
   // Add an auth interceptor with refresh capability
-  void addAuthInterceptor({
-    required String Function() getAccessToken,
-    required String Function() getRefreshToken,
-    required RefreshTokenCallback onRefreshToken,
-    required Future<void> Function(TokenPair) onTokenRefreshed,
-  }) {
-    _dio.interceptors.add(
-      AuthInterceptor(
-        getAccessToken: getAccessToken,
-        getRefreshToken: getRefreshToken,
-        onRefreshToken: onRefreshToken,
-        onTokenRefreshed: onTokenRefreshed,
-        dio: _dio,
-      ),
-    );
+  void addAuthInterceptor() {
+    _dio.interceptors.add(AuthInterceptor(dio: _dio));
   }
 
   // Generic GET method
@@ -249,27 +237,22 @@ class LoggingInterceptor extends Interceptor {
   }
 }
 
+final SecureStorageImpl secureStorageImpl = SecureStorageImpl();
+
 class AuthInterceptor extends Interceptor {
-  final String Function() getAccessToken;
-  final String Function() getRefreshToken;
-  final RefreshTokenCallback onRefreshToken;
-  final Future<void> Function(TokenPair) onTokenRefreshed;
   final Dio dio;
   bool _isRefreshing = false;
   final _pendingRequests = <RequestOptions>[];
 
-  AuthInterceptor({
-    required this.getAccessToken,
-    required this.getRefreshToken,
-    required this.onRefreshToken,
-    required this.onTokenRefreshed,
-    required this.dio,
-  });
+  AuthInterceptor({required this.dio});
 
   @override
-  void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
-    final token = getAccessToken();
-    if (token.isNotEmpty) {
+  Future<void> onRequest(
+    RequestOptions options,
+    RequestInterceptorHandler handler,
+  ) async {
+    final token = await secureStorageImpl.readAccessToken();
+    if (token != null && token.isNotEmpty) {
       options.headers['Authorization'] = 'Bearer $token';
     }
     return super.onRequest(options, handler);
@@ -298,8 +281,21 @@ class AuthInterceptor extends Interceptor {
     if (!_isRefreshing) {
       _isRefreshing = true;
       try {
-        final newTokens = await onRefreshToken();
-        await onTokenRefreshed(newTokens);
+        final String? oldRefreshToken =
+            await secureStorageImpl.readRefreshToken();
+
+        if (oldRefreshToken != null) {
+          //Logic get token and refresh token new
+        }
+
+        final TokenPair newTokens = TokenPair(
+          accessToken: 'new access token',
+          refreshToken: 'new refresh token',
+        );
+
+        //Save new token and refresh token
+        await secureStorageImpl.writeAccessToken(newTokens.accessToken);
+        await secureStorageImpl.writeRefreshToken(newTokens.refreshToken);
 
         // Retry all pending requests
         for (final request in _pendingRequests) {

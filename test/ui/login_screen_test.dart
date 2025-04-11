@@ -1,8 +1,8 @@
 import 'package:base_project/core/di/service_locator.dart';
-import 'package:base_project/domain/usercases/login_with_email_password.dart';
-import 'package:base_project/domain/usercases/save_tokens.dart';
-import 'package:base_project/presentation/screens/login_screen/login_controller.dart';
-import 'package:base_project/presentation/screens/login_screen/login_screen.dart';
+import 'package:base_project/features/auth/domain/usecasees/login_with_email_password.dart';
+import 'package:base_project/features/auth/domain/usecasees/save_tokens.dart';
+import 'package:base_project/features/auth/presentation/screens/login_screen/login_controller.dart';
+import 'package:base_project/features/auth/presentation/screens/login_screen/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';

@@ -1,8 +1,8 @@
+import 'package:base_project/core/domain/entities/user.dart';
+import 'package:base_project/core/domain/repositories/user_repository.dart';
 import 'package:base_project/core/errors/failure.dart';
 import 'package:base_project/core/errors/server_failure.dart';
-import 'package:base_project/domain/entities/user.dart';
-import 'package:base_project/domain/repositories/user_repository.dart';
-import 'package:base_project/domain/usercases/get_user_details.dart';
+import 'package:base_project/features/user/domain/usecases/get_user_details.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';

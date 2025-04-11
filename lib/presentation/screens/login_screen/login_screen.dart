@@ -28,9 +28,10 @@ class LoginScreen extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 30),
                 child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     AppValue.vSpace(AppValue.paddingTop(context)),
-                    AppValue.vSpaceSmall,
+                    AppValue.vSpace(AppValue.height(context) * 0.05),
                     const Icon(
                       Icons.lock_outline,
                       size: 80,
@@ -44,14 +45,13 @@ class LoginScreen extends StatelessWidget {
                         letterSpacing: 1.2,
                       ),
                     ),
-                    AppValue.vSpaceSmall,
                     Text(
                       'Sign in to continue',
                       style: context.textStyle.size16.copyWith(
                         color: Colors.white70,
                       ),
                     ),
-                    AppValue.vSpaceLarge,
+                    AppValue.vSpaceSmall,
                     Container(
                       padding: const EdgeInsets.all(20),
                       decoration: BoxDecoration(
@@ -138,7 +138,6 @@ class LoginScreen extends StatelessWidget {
                         ],
                       ),
                     ),
-                    AppValue.vSpaceMedium,
                     TextButton(
                       onPressed: () {},
                       child: Text(
